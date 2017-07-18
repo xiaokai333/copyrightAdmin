@@ -4,6 +4,6 @@
 //$(function(){
 
     if(!sessionStorage.getItem("userInfo")){
-        window.location.href="http://dev.artally.com.cn/copyright/login.html";
+        window.location.href="http://dev.artally.com.cn/copyrightAdmin";
     }
 //})
