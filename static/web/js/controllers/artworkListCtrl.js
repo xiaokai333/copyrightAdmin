@@ -9,13 +9,16 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
         $scope.userInfo = userInfo;
 
         //下拉选项内容
-        $http.get("http://172.16.7.235:8000/work/choice").then(function(resp){
+        $http.get("http://dev.artally.com.cn/copyrights/work/choice").then(function(resp){
             if(resp.data.code === 0){
                 var tag={};
                 //作品分类
                 var kind_tag=[
                     {id:1,text:"艺术品"},
-                    {id:2,text:"摄影"}
+                    {id:2,text:"摄影"},
+                    {id:3,text:"影视娱乐IP"},
+                    {id:4,text:"动漫"},
+                    {id:5,text:"游戏"}
                 ];
                 //摄影分类下作品类型
                 var work_types_shoot=[
@@ -25,15 +28,18 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
 
                 //颜色集合
                 var color_tag=[
-                    {id:1,text:"#000"},
-                    {id:2,text:"#fff"},
-                    {id:3,text:"red"},
-                    {id:4,text:"blue"},
-                    {id:5,text:"green"},
-                    {id:6,text:"yellow"},
-                    {id:7,text:"orange"},
-                    {id:8,text:"pink"},
-                    {id:9,text:"purple"}
+                    {id:1,text:"#f15246"},
+                    {id:2,text:"#ffa626"},
+                    {id:3,text:"#ede73d"},
+                    {id:4,text:"#2cbf51"},
+                    {id:5,text:"#3ac2ce"},
+                    {id:6,text:"#3574e6"},
+                    {id:7,text:"#803cd9"},
+                    {id:8,text:"#cc62c6"},
+                    {id:9,text:"#fff"},
+                    {id:10,text:"#e6e6e6"},
+                    {id:11,text:"#000"},
+                    {id:12,text:"#7b4611"}
                 ];
                 //材质
                 var work_material=[
@@ -88,27 +94,31 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                 tag.work_types_shoot = work_types_shoot;
                 tag.work_material = work_material;
                 localStorage.setItem("tag",JSON.stringify(tag));
+                $scope.tags = tag;
             }
         })
 
-        //复选框选择获取id
+        //复选框色系/标签复选框选择获取id
         $scope.selected = [];
-        var updateSelected = function(action,id){
-            if(action == 'add' && $scope.selected.indexOf(id) == -1){
-                $scope.selected.push(id);
+        $scope.colorSelected = [];
+        $scope.themeSelected = [];
+        $scope.styleSelected = [];
+        var updateSelected = function(obj,action,id){
+            if(action == 'add' && $scope[obj].indexOf(id) == -1){
+                $scope[obj].push(id);
             }
-            if(action == 'remove' && $scope.selected.indexOf(id)!=-1){
-                var idx = $scope.selected.indexOf(id);
-                $scope.selected.splice(idx,1);
+            if(action == 'remove' && $scope[obj].indexOf(id)!=-1){
+                var idx = $scope[obj].indexOf(id);
+                $scope[obj].splice(idx,1);
             }
         }
-        $scope.updateSelection = function($event, id){
+        $scope.updateSelection = function(obj,$event, id){
             var checkbox = $event.target;
             var action = (checkbox.checked?'add':'remove');
-            updateSelected(action,id);
+            updateSelected(obj,action,id);
         }
-        $scope.isSelected = function(id){
-            return $scope.selected.indexOf(id)>=0;
+        $scope.isSelected = function(obj,id){
+            return $scope[obj].indexOf(id)>=0;
         }
 
         // 列表数据获取
@@ -187,10 +197,16 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
             showModal('confirm',tit,$scope)
         }
         //搜索
-        $scope.search = function(searchText){
-            if(searchText){
+        $scope.search = function(searchText,searchKind,searchShape){
+            //console.log(searchText,searchKind,searchShape,$scope.themeSelected,$scope.colorSelected,$scope.styleSelected)
+            if(searchText != '' || searchKind !='undefined' || searchShape !='undefined'|| $scope.colorSelected.length>0 || $scope.themeSelected.length>0 || $scope.styleSelected.length>0){
                 var info={
-                    search:searchText
+                    search:searchText,
+                    kind:searchKind,
+                    shape:searchShape,
+                    theme:$scope.themeSelected.join(","),
+                    style:$scope.styleSelected.join(","),
+                    color:$scope.colorSelected.join(",")
                 }
                 $http(
                     {method:'GET',url:IPprefix+"list/work",params:info}
