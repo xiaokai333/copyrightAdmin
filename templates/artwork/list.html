@@ -1,13 +1,50 @@
 <header class="margin-bottom clear">
-    <h1 class="pull-left">艺术品版权管理</h1>
-    <div class="col-lg-6 pull-left">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="支持ID、作品名、作者搜索" ng-model="searchText">
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>
-			</span>
+    <h1 class="">艺术品版权管理</h1>
+    <div class="row margin-left col-md-6">
+        <h4 style="margin-top: 10px;">输入检索关键词</h4>
+        <input type="text" style="margin-top: 10px;" class="form-control pull-left" placeholder="支持ID、作品名、作者搜索" ng-model="searchText">
+    </div>
+    <div class="row margin-left col-md-10">
+        <h4 style="margin-top: 10px;">筛选条件</h4>
+        <div class="input-group col-md-5 pull-left" style="margin-top: 10px;">
+            <span class="input-group-addon" id="kind">作品分类</span>
+            <select class="form-control" ng-model="searchKind" ng-options="o.id as o.text for o in tags.kind_tag">
+            </select>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="input-group col-md-5 pull-left" style="margin-top: 10px;">
+            <span class="input-group-addon" id="shape">画作形状</span>
+            <select class="form-control" ng-model="searchShape" ng-options="o.id as o.text for o in tags.work_shapes">
+            </select>
         </div>
     </div>
+    <div class="row margin-left col-md-10" style="margin-top: 10px;">
+        <div class="input-group col-md-12" style="margin-top: 10px;">
+            <span class="input-group-addon" id="theme">主题标签</span>
+            <div class="col-md-12">
+                <label class="checkbox-inline" ng-repeat="theme in tags.theme_tag">
+                    <input type="checkbox" name="theme" ng-checked="isSelected('themeSelected',theme.id)" ng-click="updateSelection('themeSelected',$event,theme.id)">{{theme.name}}
+                </label>
+            </div>
+        </div>
+        <div class="input-group col-md-12" style="margin-top: 10px;">
+            <span class="input-group-addon" id="style">风格标签</span>
+            <div class="col-md-12">
+                <label class="checkbox-inline" ng-repeat="style in tags.style_tag">
+                    <input type="checkbox" ng-checked="isSelected('styleSelected',style.id)" ng-click="updateSelection('styleSelected',$event,style.id)">{{style.name}}
+                </label>
+            </div>
+        </div>
+        <div class="input-group col-md-12" style="margin-top: 10px;">
+            <span class="input-group-addon" id="color">画作色系</span>
+            <div class="col-md-12">
+                <label class="checkbox-inline" ng-repeat="color in tags.color_tag">
+                    <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><button type="button" class="lq-colorBtn" style="background: {{color.text}}"></button>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="search(searchText,searchKind,searchShape)">搜索</div>
     <button type="button" class="btn btn-info pull-right" ui-sref="tabs.artwork/artwork({artworkId:'NaN'})" ng-show="{{userInfo.data}} != 3">+ 创建艺术品</button>
 </header>
 <section class="margin-bottom">
