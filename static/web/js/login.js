@@ -4,7 +4,7 @@
 $(function(){
 
     if(sessionStorage.getItem("userInfo")){
-        window.location.href="index.html#!/tabs/artistsFiles/list";
+        window.location.href="templates/index.html#!/tabs/artistsFiles/list";
     }
     $("#login").click(function(){
 
@@ -27,7 +27,7 @@ $(function(){
                         uid:resp.uid
                     }
                     sessionStorage.setItem("userInfo",JSON.stringify(obj));
-                    window.location.href="index.html#!/tabs/artistsFiles/list";
+                    window.location.href="templates/index.html#!/tabs/artistsFiles/list";
                 }else{
                     $(".msg").html(resp.message);
                 }
