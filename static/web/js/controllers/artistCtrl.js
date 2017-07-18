@@ -5,6 +5,7 @@
  * @version $Id$
  */
 index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPprefix','$state','postJson','$http','showModal','$location', function($scope,$stateParams,getMsg,$http,IPprefix,$state,postJson,$http,showModal,$location){
+	$scope.saveBTN='保存并下一步';
 	$scope.mainData={
 		'name':'',
 		'name_pinyin':'',
@@ -31,6 +32,7 @@ index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPpre
     }
 	// 判断艺术家ID
 	if(isFinite($stateParams.artistID)){
+		$scope.saveBTN='保存';
 		$scope.headFlag=false;
 		// 列表数据获取
 		getMsg.do('artist/detail/'+$stateParams.artistID).then(function(res){
