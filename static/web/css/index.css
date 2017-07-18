@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-07-03 18:05:41
+ * @version $Id$
+ */
+/*重置样式*/
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dt,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0;}
+a{text-decoration:none;} 
+em,i{font-style:normal}
+li{list-style:none}
+img{border:0;}                          
+h1,h2,h3,h4,h5,h6,b,strong{font-weight:normal;}
+.clear:after{content:".";height:0;overflow:hidden;clear:both;display:block;visibility:hidden;}
+
+/*公用样式*/
+body{padding: 30px 20px;}
+.margin-bottom{margin-bottom: 30px;}
+.margin-left{margin-left: 30px!important;}
+.textarea{padding: 10px;text-indent: 2em;border: 1px dashed;}
+.sImg{max-width: 100px;max-height: 100px;}
+.bImg{max-width: 100px;max-height: 200px;}
+
+/*作品创建*/
+.lq-colorBtn{
+    width:20px;
+    height:20px;
+}
+

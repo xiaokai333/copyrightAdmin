@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>版权管理平台</title>
+    <link rel="stylesheet" type="text/css" href="../static/web/css/bootstrap.min.css">
+    <!-- 样式文件 -->
+    <link rel="stylesheet" type="text/css" href="../static/web/css/index.css">
+    <!-- 文件引用 -->
+    <script type="text/javascript" src="../static/web/js/libs/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../static/web/js/libs/angular.min.js"></script>
+    <script type="text/javascript" src="../static/web/js/libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/web/js/libs/angular-ui-router.min.js"></script>
+
+    <!--判断登陆-->
+    <script type="text/javascript" src="../static/web/js/index.js"></script>
+    <!-- 路由配置及服务 -->
+    <script type="text/javascript" src="../static/web/js/router.js"></script>
+    <script type="text/javascript" src="../static/web/js/service/pubServ.js"></script>
+
+    <!--左侧目录-->
+    <script type="text/javascript" src="../static/web/js/controllers/tabCtrl.js"></script>
+    <!-- 艺术家档案 -->
+    <script type="text/javascript" src="../static/web/js/controllers/artistFilesListCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artistCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artistCopyrightCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artistDetailCtrl.js"></script>
+    <!--艺术品版权管理-->
+    <script type="text/javascript" src="../static/web/js/controllers/artworkListCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artworkAccreditCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artworkMsgCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artworkDetailCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/artworkRequestCtrl.js"></script>
+    <!-- 版权使用审批 -->
+    <script type="text/javascript" src="../static/web/js/controllers/copyrightAllowCtrl.js"></script>
+    <!--业务数据-->
+    <script type="text/javascript" src="../static/web/js/controllers/businessListCtrl.js"></script>
+    <script type="text/javascript" src="../static/web/js/controllers/businessAddCtrl.js"></script>
+    <!--艺术家收入核算-->
+    <script type="text/javascript" src="../static/web/js/controllers/incomeCtrl.js"></script>
+    
+</head>
+<body class="clear" ng-app="index">
+    <div ui-view="tabs"></div>
+</body>
+</html>

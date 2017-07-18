@@ -1,0 +1,208 @@
+<div class="col-md-2"></div>
+<div class="col-md-10">
+	<div class="row margin-bottom">
+		<h2 class="col-md-3">艺术家信息</h2>
+	</div>
+	<form action="">
+		<div class="row margin-bottom">
+			<div class="col-md-3">
+				<img class="bImg" ng-src="{{mainData.head}}" alt="">
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>艺术家编号</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.artist_number}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>艺术家姓名</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.name}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>研究方向</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.study_direction}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>机构、院校</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.organization}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>联络方式</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.phone}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>身份证</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData.IDcard}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-10">
+				<h4 class="margin-bottom h3">艺术家简介</h4>
+				<p>艺术简介:</p>
+				<p class="margin-bottom textarea"  style="width: 100%;height: 120px;overflow: auto;">{{mainData.description}}</p>
+				<p>展览记录:</p>
+				<p class="margin-bottom textarea"  style="width: 100%;height: 120px;overflow: auto;">{{mainData.exhibit_log}}</p>
+				<p>收藏/拍卖纪录:</p>
+				<p class="margin-bottom textarea"  style="width: 100%;height: 120px;overflow: auto;">{{mainData.collect_record}}</p>
+			</div>
+		</div>
+		<button class="btn btn-info col-md-offset-3 margin-bottom" type="button"  ng-disabled="user==3" ui-sref="tabs.artistsFiles/artist({artistID:mainData.id})">修改艺术家信息</button>
+	</form>
+	<div ng-show="mainData2.is_public==0 || mainData2.is_public==1">
+		<div class="row margin-bottom">
+			<h2 class="col-md-5">艺术家授权信息</h2>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>公共版权</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.is_public==0? '否' : '是' ;}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>授权时间</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.authorize_time}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>授权期</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.authorize_period}}年</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>授权范围</span>
+			</div>
+			<div class="col-md-5">
+				<span ng-show="mainData2.authorize_area==1">大陆</span>
+				<span ng-show="mainData2.authorize_area==2">大中华（含港澳台）</span>
+				<span ng-show="mainData2.authorize_area==3">亚洲</span>
+				<span ng-show="mainData2.authorize_area==4">全球</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>独家授权</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.is_unique==0? '否' : '是' ;}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>外授状态？</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.is_foreign==0? '无' : '有' ;}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-3">
+				<span>转授权（转授权出处？）</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.is_delegation==0? '否' : '是' ;}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-2">
+				<span>定价权</span>
+			</div>
+			<div class="col-md-5">
+				<span>{{mainData2.def_price==0? '无' : '有' ;}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-2">授权品类及分成</span>
+		</div>
+		<div class="row margin-bottom" ng-show="mainData2.no_limit!=''">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-3">
+					<span>不限量印刷复制品</span>
+				</div>
+				<div class="col-md-5">
+					<span>{{mainData2.no_limit}}%</span>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-bottom" ng-show="mainData2.limit!=''">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-3">
+					<span>限量印刷复制品</span>
+				</div>
+				<div class="col-md-5">
+					<span>{{mainData2.limit}}%</span>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-bottom" ng-show="mainData2.body_derive!=''">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-3">
+					<span>实体衍生品</span>
+				</div>
+				<div class="col-md-5">
+					<span>{{mainData2.body_derive}}%</span>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-bottom" ng-show="mainData2.number_derive!=''">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-3">
+					<span>数字衍生品</span>
+				</div>
+				<div class="col-md-5">
+					<span>{{mainData2.number_derive}}</span><span ng-show="mainData2.number_derive=='MG'">%</span>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-bottom" ng-show="mainData2.business_authorize!=''">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-3">
+					<span>商业转授权</span>
+				</div>
+				<div class="col-md-5">
+					<span>{{mainData2.business_authorize}}</span><span ng-show="mainData2.business_authorize=='MG'">%</span>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-3 h5">核算周期（自动生成）</span>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
+		</div>
+		<button class="btn btn-info col-md-offset-3" type="button" ng-disabled="user==3" ui-sref="tabs.artistsFiles/copyright({artistID:mainData.authorizer_id})" >修改授权信息</button>
+	</div>
+</div>

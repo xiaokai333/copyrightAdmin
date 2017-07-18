@@ -1,0 +1,10 @@
+<div class="btn-group-vertical col-md-2" role="group" aria-label="...">
+    <button type="button" class="btn btn-default">欢迎:&nbsp;{{userInfo.username}}</button>
+    <button type="button" class="btn btn-default" ui-sref="tabs.artistsFiles/list">艺术家档案</button>
+    <button type="button" class="btn btn-default" ui-sref="tabs.artwork/list">艺术品版权管理</button>
+    <button type="button" class="btn btn-default" ui-sref="tabs.copyrightAllow">版权审批</button>
+    <button type="button" class="btn btn-default" ui-sref="tabs.business/list">业务数据</button>
+    <button type="button" class="btn btn-default" ui-sref="tabs.income/list" ng-show="{{userInfo.data}} != 3">艺术家收入核算</button>
+    <button type="button" class="btn btn-default" ng-click="quit()">安全退出</button>
+</div>
+<div class="col-md-10" ui-view="module"></div>

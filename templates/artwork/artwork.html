@@ -1,0 +1,211 @@
+<div class="col-md-2"></div>
+<div class="col-md-10" >
+    <div class="row margin-bottom">
+        <h2 class="col-md-6">艺术品版权/ 作品{{title}}</h2>
+    </div>
+    <form  ng-submit="artworkSave()">
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="col-md-3">
+                <img class="bImg" ng-src="{{artwork.cover}}" alt="作品预览图">
+            </div>
+            <div class="col-md-3">
+                <p>作品预览图</p>
+                <input type="file" onchange="angular.element(this).scope().updateHead(this.files)" accept="image/jpeg,image/png,image/jpg,image/gif" ng-required="artworkId =='NaN' && artwork.cover !='' ">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon">作品名称</span>
+                <input type="text" class="form-control" ng-model="artwork.name" required>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                    <span class="input-group-addon">作者姓名</span>
+                <select class="form-control col-md-12" ng-model="artwork.artist" ng-options="o.id as o.conbian_name
+ for o in artistList | filter:{name:search}" ng-value="1">
+                </select>
+                <input type="text" class="form-control" placeholder="输入名字检索" ng-model="search">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="year">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;代</span>
+                <input type="number" max="{{yearMax}}" class="form-control" ng-model="artwork.year" required>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="kind">作品分类</span>
+                <select class="form-control" ng-model="artwork.kind" ng-options="o.id as o.text for o in kind_tag">
+                </select>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="type">作品类型</span>
+                <select class="form-control" ng-show="artwork.kind == null"></select>
+                <select class="form-control" ng-model="artwork.category" ng-options="o.id as o.text for o in work_types" ng-show="artwork.kind == 1"></select>
+                <select class="form-control" ng-model="artwork.category" ng-options="o.id as o.text for o in work_types_shoot" ng-show="artwork.kind == 2"></select>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="artwork.kind == 1 && (artwork.category ==1 || artwork.category ==2 || artwork.category ==3 || artwork.category ==4)">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="texture">材&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;质</span>
+                <select class="form-control" ng-model="artwork.material" ng-options="o.id as o.text for o in work_material[0]" ng-show="artwork.kind == 1 && artwork.category == 1"></select>
+                <select class="form-control" ng-model="artwork.material" ng-options="o.id as o.text for o in work_material[1]" ng-show="artwork.kind == 1 && artwork.category == 2"></select>
+                <select class="form-control" ng-model="artwork.material" ng-options="o.id as o.text for o in work_material[2]" ng-show="artwork.kind == 1 && artwork.category == 3"></select>
+                <select class="form-control" ng-model="artwork.material" ng-options="o.id as o.text for o in work_material[3]" ng-show="artwork.kind == 1 && artwork.category == 4"></select>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="shape">画作形状</span>
+                <select class="form-control" ng-model="artwork.shape" ng-options="o.id as o.text for o in work_shapes">
+                </select>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-10">
+                <span class="input-group-addon" id="size">尺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;寸</span>
+                <div style="margin-left: 20px;">
+                    <div class="radio col-md-12">
+                        <label class="col-md-2">
+                            <input type="radio" name="size" ng-value="0" ng-model="artwork.is_variable" required>尺寸固定
+                        </label>
+                        <div class="col-md-10" ng-if="artwork.is_variable==0">
+                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.width" ng-required="artwork.is_variable==0">宽(cm)
+                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.height" ng-required="artwork.is_variable==0">高(cm)
+                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.length" ng-required="artwork.is_variable==0">长(cm)
+                        </div>
+                    </div>
+                    <div class="radio col-md-12">
+                        <label>
+                            <input type="radio" name="size" ng-value="1" ng-model="artwork.is_variable" required>尺寸不定
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-1"></span>
+            <div class="input-group col-md-10">
+                <span class="input-group-addon" id="color">画作色系</span>
+                <div class="col-md-10">
+                    <label class="checkbox-inline" ng-repeat="color in color_tag">
+                        <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><button type="button" class="lq-colorBtn" style="background: {{color.text}}"></button>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom col-md-10">
+            <h4>标签</h4>
+            <div style="margin-left: 50px;margin-top: 20px;">
+                <div class="input-group col-md-12" style="margin-top: 10px;">
+                    <span class="input-group-addon" id="theme">主题标签</span>&nbsp;&nbsp;
+                    <label class="checkbox-inline" ng-repeat="theme in theme_tag">
+                        <input type="checkbox" name="theme" ng-checked="isSelected('themeSelected',theme.id)" ng-click="updateSelection('themeSelected',$event,theme.id)">{{theme.name}}
+                    </label>
+                </div>
+                <div class="input-group col-md-12" style="margin-top: 10px;">
+                    <span class="input-group-addon" id="style">风格标签</span>&nbsp;&nbsp;
+                    <label class="checkbox-inline" ng-repeat="style in style_tag">
+                        <input type="checkbox" ng-checked="isSelected('styleSelected',style.id)" ng-click="updateSelection('styleSelected',$event,style.id)">{{style.name}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom col-md-10">
+            <h4>原作销售状态</h4>
+            <div style="margin-left: 50px;margin-top: 20px;">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="sell"  ng-value="1" ng-model="artwork.sale_state">待售
+                    </label>
+                    <div style="margin-left: 30px;" ng-if="artwork.sale_state==1">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="place" ng-value="1" ng-model="artwork.sale_direc">艺术云朵
+                                <span style="margin-left:10px;" ng-show="artwork.sale_direc==1 && artwork.sale_state==1">
+                                    价 格<input type="number" min="0" step="0.001" style="width: 100px;" ng-model="artwork.sale_price"  ng-required="artwork.sale_state==1 && artwork.sale_direc==1">
+                                    佣金比例<input type="number" min="0" step="0.0001" style="width: 100px;" ng-model="artwork.comm_precent" ng-required="artwork.sale_state==1 && artwork.sale_direc==1">%
+                                </span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="place" ng-value="2" ng-model="artwork.sale_direc">其他渠道
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="sell" ng-value="2" ng-model="artwork.sale_state">已售
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="sell" ng-value="3" ng-model="artwork.sale_state">非卖
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom col-md-10">
+            <h4>原作收藏状态</h4>
+            <div style="margin-left: 50px;margin-top: 20px;">
+                <label class="radio-inline">
+                    <input type="radio" name="collect" ng-value="1" ng-model="artwork.store_state">艺术家自藏
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="collect" ng-value="2" ng-model="artwork.store_state">私人收藏
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="collect"  ng-value="3" ng-model="artwork.store_state">其他收藏
+                    <input type="text" ng-model="artwork.store" ng-if="artwork.store_state==3" ng-required="artwork.store_state==3">
+                </label>
+            </div>
+        </div>
+
+
+        <div class="row margin-bottom">
+            <div class="col-md-10">
+                <h4 class="margin-bottom">艺术简介</h4>
+                <p>艺术内涵</p>
+                <textarea style="width: 100%;height: 120px;" class="margin-bottom" ng-model="artwork.summary"></textarea>
+                <p>展览记录</p>
+                <textarea style="width: 100%;height: 120px;" class="margin-bottom" ng-model="artwork.exhibit_log"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-info col-md-offset-3" type="submit">保存并下一步</button>
+    </form>
+</div>
+
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">版权管理平台</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{showMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,170 @@
+<div class="col-md-2"></div>
+<div class="col-md-10">
+	<div class="row margin-bottom">
+		<h2 class="col-md-3">授权卡</h2>
+	</div>
+	<form ng-submit="sub()">
+		<div class="row margin-bottom">
+			<span class="col-md-1"></span>
+			<div class="col-md-3">
+				<img class="bImg" ng-src="{{headIMG}}" alt="">
+			</div>
+			<div class="col-md-3">
+				<p>艺术家编号：{{id}}</p>
+				<p>艺术家姓名：{{name}}</p>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">公共版权</span>
+			<div class="col-md-3">
+				<input type="radio" name="publicCopyright" ng-model='publicCopyright' ng-value="1" required=""> 是
+				<input type="radio" name="publicCopyright" ng-model='publicCopyright' ng-value="0" class="margin-left" required> 否
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">授权时间</span>
+			<div class="col-md-3">
+				<input type="date" ng-model='date' required> 起
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">授权期</span>
+			<div class="col-md-7">
+				<input type="radio" name="accredit" ng-model='accredit' ng-value="3" ng-click="ctrlTxt(false,1)" required> 三年
+				<input type="radio" name="accredit" ng-model='accredit' ng-value="5" ng-click="ctrlTxt(false,1)" class="margin-left" required> 五年
+				<input type="radio" name="accredit" ng-model='accredit' ng-value="10" ng-click="ctrlTxt(false,1)" class="margin-left" required> 十年
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-4 col-md-offset-3">
+				<input type="radio" name="accredit" ng-model='accredit' ng-value="'other'" ng-click="ctrlTxt(true,1)" required> 其他
+				<input type="number" min="1" ng-show="txt1" ng-model='accreditDate' style="width: 40px;" ng-required='accredit=="other"'><span ng-show="txt1">年</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">授权范围</span>
+			<div class="col-md-3">
+				<select class="form-control" ng-model='accreditArea'>
+					<option ng-value="1">大陆</option>
+					<option ng-value="2">大中华（含港澳台）</option>
+					<option ng-value="3">亚洲</option>
+					<option ng-value="4">全球</option>
+				</select>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">独家授权</span>
+			<div class="col-md-3">
+				<input type="radio" name="accreditOnly" ng-model="accreditOnly" required ng-value="1"> 是
+				<input type="radio" name="accreditOnly" ng-model="accreditOnly" required ng-value="0" class="margin-left"> 否
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">外授状态？</span>
+			<div class="col-md-3">
+				<input type="radio" name="outAccredit" ng-model="outAccredit" ng-value="1" required> 有
+				<input type="radio" name="outAccredit" ng-model="outAccredit" ng-value="0" required class="margin-left"> 无
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">转授权</span>
+			<div class="col-md-3">
+				<input type="radio" name="transAccredit" ng-model='transAccredit' ng-value="1" required> 是
+				<input type="radio" name="transAccredit" ng-model='transAccredit' ng-value="0" class="margin-left" required> 否
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">定价权</span>
+			<div class="col-md-3">
+				<input type="radio" name="dealPrice" ng-model='dealPrice' ng-value="1" required> 有
+				<input type="radio" name="dealPrice" ng-model='dealPrice' ng-value="0" class="margin-left" required> 无
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span style="color: red;" class="col-md-1 text-right">*</span>
+			<span class="col-md-2">授权品类及分成</span>
+		</div>
+		<div class="row margin-bottom">
+			<div class="col-md-10 col-md-offset-1">
+				<input type="checkbox" ng-checked="isChecked('no_limit')" ng-click="updateSelection($event,'no_limit')"> 不限量印刷复制品
+				<input type="radio" name="accreditPercentage1" ng-model='no_limit' ng-value="'5'" class="margin-left"  ng-click="ctrlTxt(false,2)" ng-required="isChecked('no_limit')"> 5%
+				<input type="radio" name="accreditPercentage1" ng-model='no_limit' ng-value="'10'" class="margin-left"  ng-click="ctrlTxt(false,2)" ng-required="isChecked('no_limit')"> 10%
+				<input type="radio" name="accreditPercentage1" ng-model='no_limit' ng-value="'other'" class="margin-left" ng-click="ctrlTxt(true,2)" ng-required="isChecked('no_limit')"> 其他
+				<input ng-show="txt2" type="number" min="0" max="100" ng-model="no_limitTxt" style="width: 50px;" ng-required='no_limit=="other"'><span ng-show="txt2">%</span>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<input type="checkbox" ng-checked="isChecked('limit')" ng-click="updateSelection($event,'limit')"> 限量印刷复制品&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="accreditPercentage2" ng-model='limit' ng-value="'5'" class="margin-left"  ng-click="ctrlTxt(false,3)"  ng-required="isChecked('limit')"> 5%
+				<input type="radio" name="accreditPercentage2" ng-model='limit' ng-value="'10'" class="margin-left"  ng-click="ctrlTxt(false,3)"  ng-required="isChecked('limit')"> 10%
+				<input type="radio" name="accreditPercentage2" ng-model='limit' ng-value="'other'" class="margin-left"  ng-click="ctrlTxt(true,3)"  ng-required="isChecked('limit')"> 其他
+				<input ng-show="txt3" type="number" min="0" max="100" ng-model="limitTxt" style="width: 50px;" ng-required='limit=="other"'><span ng-show="txt3">%</span>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<input type="checkbox" ng-checked="isChecked('body_derive')" ng-click="updateSelection($event,'body_derive')"> 实体衍生品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="accreditPercentage3" ng-model='body_derive' ng-value="'5'" class="margin-left"  ng-click="ctrlTxt(false,4)" ng-required="isChecked('body_derive')"> 5%
+				<input type="radio" name="accreditPercentage3" ng-model='body_derive' ng-value="'10'" class="margin-left"  ng-click="ctrlTxt(false,4)" ng-required="isChecked('body_derive')"> 10%
+				<input type="radio" name="accreditPercentage3" ng-model='body_derive' ng-value="'other'" class="margin-left"  ng-click="ctrlTxt(true,4)" ng-required="isChecked('body_derive')"> 其他
+				<input ng-show="txt4" type="number" min="0" max="100" ng-model="body_deriveTxt" style="width: 50px;" ng-required='body_derive=="other"'><span ng-show="txt4">%</span>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<input type="checkbox" ng-checked="isChecked('number_derive')" ng-click="updateSelection($event,'number_derive')"> 数字衍生品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="accreditPercentage4" ng-model='number_derive' ng-value="'MG'" class="margin-left"  ng-click="ctrlTxt(false,5)" ng-required="isChecked('number_derive')"> MG
+				<input type="radio" name="accreditPercentage4" ng-model='number_derive' ng-value="'5'" class="margin-left"  ng-click="ctrlTxt(false,5)" ng-required="isChecked('number_derive')"> 5%
+				<input type="radio" name="accreditPercentage4" ng-model='number_derive' ng-value="'10'" class="margin-left"  ng-click="ctrlTxt(false,5)" ng-required="isChecked('number_derive')"> 10%
+				<input type="radio" name="accreditPercentage4" ng-model='number_derive' ng-value="'50'" class="margin-left"  ng-click="ctrlTxt(false,5)" ng-required="isChecked('number_derive')"> 50%
+				<input type="radio" name="accreditPercentage4" ng-model='number_derive' ng-value="'other'" class="margin-left"  ng-click="ctrlTxt(true,5)" ng-required="isChecked('number_derive')"> 其他
+				<input ng-show="txt5" type="number" min="0" max="100" ng-model='number_deriveTxt' style="width: 50px;" ng-required='number_derive=="other"'><span ng-show="txt5">%</span>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<input type="checkbox" ng-checked="isChecked('business_authorize')" ng-click="updateSelection($event,'business_authorize')"> 商业转授权&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="accreditPercentage5" ng-model='business_authorize' ng-value="'MG'" class="margin-left"  ng-click="ctrlTxt(false,6)" ng-required="isChecked('business_authorize')"> MG
+				<input type="radio" name="accreditPercentage5" ng-model='business_authorize' ng-value="'5'" class="margin-left"  ng-click="ctrlTxt(false,6)" ng-required="isChecked('business_authorize')"> 5%
+				<input type="radio" name="accreditPercentage5" ng-model='business_authorize' ng-value="'10'" class="margin-left"  ng-click="ctrlTxt(false,6)" ng-required="isChecked('business_authorize')"> 10%
+				<input type="radio" name="accreditPercentage5" ng-model='business_authorize' ng-value="'50'" class="margin-left"  ng-click="ctrlTxt(false,6)" ng-required="isChecked('business_authorize')"> 50%
+				<input type="radio" name="accreditPercentage5" ng-model='business_authorize' ng-value="'other'" class="margin-left"  ng-click="ctrlTxt(true,6)" ng-required="isChecked('business_authorize')"> 其他
+				<input ng-show="txt6" type="number" min="0" max="100" ng-model='business_authorizeTxt' style="width: 50px;" ng-required='business_authorize=="other"'><span ng-show="txt6">%</span>
+			</div>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-1"></span>
+			<span class="col-md-3 h5">核算周期（自动生成）</span>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-1"></span>
+			<span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
+		</div>
+		<div class="row margin-bottom">
+			<span class="col-md-1"></span>
+			<span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
+		</div>
+		<button class="btn btn-info col-md-offset-1" type="button" ng-click="skip()">跳过</button>
+		<button class="btn btn-info col-md-offset-1" type="submit">提交信息</button>
+	</form>
+</div>
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">版权管理平台</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{showMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+        <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

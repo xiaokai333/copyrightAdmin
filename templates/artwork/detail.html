@@ -1,0 +1,297 @@
+<div class="col-md-2"></div>
+<div class="col-md-10">
+    <div class="row margin-bottom">
+        <h2 class="col-md-6">艺术品版权/ 作品卡</h2>
+    </div>
+    <form action="">
+        <div class="row margin-bottom">
+            <div class="col-md-3">
+                <img class="bImg" ng-src="{{artwork.cover}}" alt="艺术品">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>版权编号</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.copyright_number}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>作品名称</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.name}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>作者姓名</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.artist_name}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>年代</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.year}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>作品分类</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.kind}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>作品类别</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.category}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>材质</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.material}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>画作形状</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{artwork.shape}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>尺寸</span>
+            </div>
+            <div class="col-md-5" ng-if="artwork.is_variable!=0">
+                <span>不固定</span>
+            </div>
+            <div class="col-md-5" ng-if="artwork.is_variable==0">
+                <span>{{artwork.width}}</span>宽(cm)
+                <span>{{artwork.height}}</span>高(cm)
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>画作色系</span>
+            </div>
+            <div class="col-md-5">
+                <button class="lq-colorBtn" style="background: {{color.text}};margin-left: 10px;" ng-repeat="color in work_color_tag" ng-show="colorFlag[{{color.id}}]"></button>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <h4 class="margin-bottom">标签</h4>
+            <div class="col-md-12 margin-bottom">
+                <span>主题标签</span>
+                <span class="margin-left" ng-repeat="theme in work_theme_tag" ng-show="themeFlag[{{theme.id}}]">{{theme.name}}</span>
+            </div>
+            <div class="col-md-12">
+                <span>风格标签</span>
+                <span class="margin-left" ng-repeat="style in work_style_tag" ng-show="styleFlag[{{style.id}}]">{{style.name}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <h4 class="margin-bottom">原作销售状态</h4>
+            <div class="col-md-12">
+                <span>{{artwork.sale_state}}</span>
+                <span class="margin-left" ng-if="artwork.sale_state=='待售'">{{artwork.sale_direc}}</span>
+                <span class="margin-left" ng-if="artwork.sale_direc=='艺术云朵' && artwork.sale_state=='待售'">价格:{{artwork.sale_price}}</span>
+                <span class="margin-left" ng-if="artwork.sale_direc=='艺术云朵' && artwork.sale_state=='待售'">佣金比例:{{artwork.comm_precent}}%</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <h4 class="margin-bottom">原作收藏状态</h4>
+            <div class="col-md-10">
+                <span>{{artwork.store_state}}</span>
+                <span class="margin-left" ng-if="artwork.store_state == '其他收藏'">收藏地{{artwork.store}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-10">
+                <h4 class="margin-bottom h3">艺术简介</h4>
+                <p>艺术内涵:</p>
+                <textarea class="margin-bottom" style="width: 100%;height: 120px" ng-model="artwork.summary"></textarea>
+                <p>展览记录:</p>
+                <textarea class="margin-bottom" style="width: 100%;height: 120px" ng-model="artwork.exhibit_log"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-info col-md-offset-3 margin-bottom" type="button" ui-sref="tabs.artwork/artwork({artworkId:artwork.id})" ng-disabled="{{userInfo.data}} == 3">修改作品信息</button>
+    </form>
+    <div>
+        <div class="row margin-bottom">
+            <h2 class="col-md-5">艺术家授权信息</h2>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize_body">
+            <div class="col-md-2">
+                <span>授权主体</span>
+            </div>
+            <div class="col-md-5">
+                <p class="margin-bottom" ng-repeat="item in authorize_body">{{item}}</p>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>公共版权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_public==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权时间</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.authorize_time}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权期</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.authorize_period}}年</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权范围</span>
+            </div>
+            <div class="col-md-5">
+                <span ng-show="authorize.authorize_area==1">大陆</span>
+                <span ng-show="authorize.authorize_area==2">大中华（含港澳台）</span>
+                <span ng-show="authorize.authorize_area==3">亚洲</span>
+                <span ng-show="authorize.authorize_area==4">全球</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>独家授权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_unique==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>外授状态？</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_foreign==0? '无' : '有' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-3">
+                <span>转授权（转授权出处？）</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_delegation==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>定价权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.def_price==0? '无' : '有' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-2">授权品类及分成</span>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.no_limit!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>不限量印刷复制品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.no_limit}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.limit!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>限量印刷复制品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.limit}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.body_derive!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>实体衍生品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.body_derive}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.number_derive!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>数字衍生品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.number_derive}}</span><span ng-show="authorize.number_derive=='MG'">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.business_authorize!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>商业转授权</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.business_authorize}}</span><span ng-show="authorize.business_authorize=='MG'">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-3 h5">核算周期（自动生成）</span>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
+        </div>
+        <button class="btn btn-info col-md-offset-3" type="button" ng-disabled="{{userInfo.data}} == 3">修改授权信息</button>
+    </div>
+</div>
+
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">版权管理平台</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{showMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

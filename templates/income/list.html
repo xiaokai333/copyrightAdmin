@@ -1,0 +1,67 @@
+<header class="margin-bottom clear">
+    <h1 class="pull-left">艺术家收入核算</h1>
+    <div class="col-lg-6 pull-left">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="支持作者搜索" ng-model="searchText">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>
+			</span>
+        </div>
+    </div>
+</header>
+<section class="margin-bottom">
+    <table class="table table-bordered">
+        <tr>
+            <th class="text-center"></th>
+            <th class="text-center">作者</th>
+            <th class="text-center">审批单号</th>
+            <th class="text-center">版权ID</th>
+            <th class="text-center">作品名称</th>
+            <th class="text-center">图片预览</th>
+            <th class="text-center">渠道</th>
+            <th class="text-center">单价</th>
+            <th class="text-center">印数</th>
+            <th class="text-center">总价</th>
+            <th class="text-center">制作类型</th>
+            <th class="text-center">艺术家分成</th>
+        </tr>
+        <tr ng-repeat="item in incomeList">
+            <td class="text-center"><input type="checkbox" ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)"></td>
+            <td class="text-center">{{item.artist}}</td>
+            <td class="text-center">{{item.apply_number}}</td>
+            <td class="text-center">{{item.copyright_number}}</td>
+            <td class="text-center">{{item.name}}</td>
+            <td class="text-center"><img ng-src="{{item.cover}}" alt=""></td>
+            <td class="text-center">{{item.channel_info}}</td>
+            <td class="text-center">{{item.unit_price}}</td>
+            <td class="text-center">{{item.number}}</td>
+            <td class="text-center">{{item.amount}}</td>
+            <td class="text-center">{{item.types}}</td>
+            <td class="text-center">{{item.percentage}}</td>
+        </tr>
+    </table>
+</section>
+<footer>
+    <input type="checkbox" ng-model="all" ng-click="allChecked(all)"> 全选
+    <button type="button" class="btn btn-info pull-right" ng-click="print()">打印{{selected.length}}</button>
+    <button type="button" class="btn btn-danger pull-right" style="margin-right: 10px;" ng-click="del()">删除{{selected.length}}</button>
+</footer>
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">版权管理平台</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{showMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

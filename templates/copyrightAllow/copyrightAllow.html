@@ -1,0 +1,75 @@
+<header class="margin-bottom clear">	
+	<h1 class="pull-left">版权审批</h1>
+	<div class="col-lg-6 pull-left">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="支持ID、作品名、作者搜索" ng-model="searchText">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>
+			</span>
+		</div>
+	</div>
+</header>
+<section class="margin-bottom">
+	<table class="table table-bordered">
+		<tr>
+			<th class="text-center"></th>
+			<th class="text-center">审批编号</th>
+			<th class="text-center">版权ID</th>
+			<th class="text-center">作品名称</th>
+			<th class="text-center">图片预览</th>
+			<th class="text-center">作者</th>
+			<th class="text-center">印数</th>
+			<th class="text-center">制作类型</th>
+			<th class="text-center">发起人</th>
+			<th class="text-center">审批</th>
+		</tr>
+		<tr ng-repeat="(index,item) in mainData">
+			<td class="text-center">
+				<input type="checkbox" ng-checked="isChecked(item.id)" ng-click="updateSelection($event,item.id)" ng-if="false">{{index+1}}
+			</td>
+			<td class="text-center">{{item.apply_number}}</td>
+			<td class="text-center">{{item.works.copyright_number}}</td>
+			<td class="text-center">{{item.works.name}}</td>
+			<td class="text-center"><img class="sImg" ng-src="{{item.works.cover}}" alt=""></td>
+			<td class="text-center">{{item.artist_name}}</td>
+			<td class="text-center">{{item.number}}</td>
+			<td class="text-center" ng-show="item.types==1">复制版画</td>
+			<td class="text-center" ng-show="item.types==2">限量版</td>
+			<td class="text-center" ng-show="item.types==3">签名限量版</td>
+			<td class="text-center">{{item.username}}</td>
+			<td class="text-center" ng-show="user!=3">
+				<button ng-show="item.state==1" type="button" class="btn btn-default" ng-click="deal(1,item.id)">同意</button>
+				<button ng-show="item.state==1" type="button" class="btn btn-default" ng-click="deal(0,item.id)">拒绝</button>
+				<p ng-show="item.state!=1">{{item.state==3? '已通过':'未通过'}}</p>
+			</td>
+			<td class="text-center" ng-show="user==3">
+				<p ng-show="item.state==1">待审批</p>
+				<p ng-show="item.state==2">未通过</p>
+				<p ng-show="item.state==3">已通过</p>
+			</td>
+		</tr>
+	</table>
+</section>
+<footer>
+	<!-- <input type="checkbox" ng-checked="isCheckedAll()" ng-click="selectAll($event)" ng-if="false"> 全选 -->
+	<button type="button" class="btn btn-info pull-right" ng-click="del()" style="margin-right: 10px;" ng-if="false">删除</button>
+</footer>
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">版权管理平台</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{showMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+        <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

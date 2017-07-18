@@ -1,0 +1,196 @@
+<div class="col-md-2"></div>
+<div class="col-md-10">
+    <div class="row margin-bottom">
+        <h2 class="col-md-6">艺术品版权/ 作品授权登记</h2>
+    </div>
+    <form style="margin-left: 20px;" ng-submit="creat()">
+        <div class="row margin-bottom">
+            <h4 class="margin-bottom">作品授权信息</h4>
+            <div class="col-md-3">
+                <img class="bImg" ng-src="{{artwork.cover}}" alt="作品预览图" >
+            </div>
+            <div class="col-md-3">
+                <p>{{artwork.name}}</p>
+                <p>{{artwork.artist_name}}</p>
+                <p>{{artwork.year}}</p>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <h4 class="margin-bottom">原作授权状态</h4>
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="">授权主体</span>
+                <button class="btn btn-primary" style="margin:0 0 20px 20px;" ng-click="addSub()">新增</button>
+                <div class="input-group" id="subject" ng-repeat="x in subject track by $index">
+                    <input type="text" class="form-control" placeholder="授权主体" ng-model="subject[$index]" required>
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button" ng-click="delSub($index)">删除</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <button type="button" class="btn btn-default" ng-click="loadArtist(artwork.artist)" ng-disabled="isAuthorize">+载入该艺术家授权信息</button>
+        </div>
+
+    <div ng-if="authorize.id">
+        <div class="row margin-bottom">
+            <h2 class="col-md-5">艺术家授权信息</h2>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>公共版权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_public==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权时间</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.authorize_time}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权期</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.authorize_period}}年</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>授权范围</span>
+            </div>
+            <div class="col-md-5">
+                <span ng-show="authorize.authorize_area==1">大陆</span>
+                <span ng-show="authorize.authorize_area==2">大中华（含港澳台）</span>
+                <span ng-show="authorize.authorize_area==3">亚洲</span>
+                <span ng-show="authorize.authorize_area==4">全球</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>独家授权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_unique==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>外授状态？</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_foreign==0? '无' : '有' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-3">
+                <span>转授权（转授权出处？）</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.is_delegation==0? '否' : '是' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-2">
+                <span>定价权</span>
+            </div>
+            <div class="col-md-5">
+                <span>{{authorize.def_price==0? '无' : '有' ;}}</span>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-2">授权品类及分成</span>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.no_limit!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>不限量印刷复制品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.no_limit}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.limit!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>限量印刷复制品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.limit}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.body_derive!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>实体衍生品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.body_derive}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.number_derive!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>数字衍生品</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.number_derive}}</span><span ng-show="authorize.number_derive=='MG'">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom" ng-show="authorize.business_authorize!=''">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-3">
+                    <span>商业转授权</span>
+                </div>
+                <div class="col-md-5">
+                    <span>{{authorize.business_authorize}}</span><span ng-show="authorize.business_authorize=='MG'">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-3 h5">核算周期（自动生成）</span>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
+        </div>
+        <button class="btn btn-info col-md-offset-3 margin-bottom" type="button">修改授权信息</button>
+    </div>
+        <div class="col-md-10">
+            <button type="button" class="btn btn-primary skip margin-left" ng-click="skip()">跳过</button>
+            <button type="submit" class="btn btn-primary creat margin-left">确认创建</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">版权管理平台</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{showMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

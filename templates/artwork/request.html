@@ -1,0 +1,81 @@
+<div class="col-md-2"></div>
+<div class="col-md-10">
+    <div class="row margin-bottom">
+        <h2 class="col-md-6">艺术品版权/ 发起审批</h2>
+    </div>
+    <form ng-submit="subReq(artwork.id)">
+        <div class="row margin-bottom">
+            <span class="col-md-1 "></span>
+            <div class="col-md-5">
+                <span>作品预览图</span>
+                <img class="bImg margin-left" ng-src="{{artwork.cover}}" alt="作品预览图">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-1"></span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="artworkName">作品名称</span>
+                <input type="text" class="form-control" readonly value="{{artwork.name}}">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-1"></span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="author">作者姓名</span>
+                <input type="text" class="form-control" readonly value="{{artwork.artist_name}}">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-1"></span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="copyNum">版权号&nbsp;&nbsp;&nbsp;</span>
+                <input type="text" class="form-control" readonly value="{{artwork.copyright_number}}">
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="type">渠道信息</span>
+                <select class="form-control" ng-model="request.channel_info" ng-options="o.id as o.text for o in channel_info">
+                </select>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="texture">制作类型</span>
+                <select class="form-control" ng-model="request.types" ng-options="o.id as o.text for o in print_types">
+                </select>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <span style="color: red;" class="col-md-1 text-right">*</span>
+            <div class="input-group col-md-7">
+                <span class="input-group-addon" id="proNum">制作数量</span>
+                <input type="number" class="form-control" min="1" step="1" required ng-model="request.number">
+            </div>
+        </div>
+
+        <button class="btn btn-info col-md-offset-3" type="submit">发起审批</button>
+    </form>
+</div>
+
+
+<!-- 模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">版权管理平台</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{showMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="no()">{{cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="flag" ng-click="yes()">{{conf}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
