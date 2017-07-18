@@ -17,7 +17,7 @@ $(function(){
                 password:password
             };
             // $.post("http://172.16.7.235:8000/login/",user,function(resp){
-            $.post("http://dev.artally.com.cn/copyright/login/",user,function(resp){
+            $.post("http://dev.artally.com.cn/copyrights/login/",user,function(resp){
                 if(resp.code === 0){
                     $(".msg").html(resp.message);
                     var obj = {
