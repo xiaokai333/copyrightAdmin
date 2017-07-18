@@ -6,7 +6,8 @@
 var index = angular.module('index', ['ui.router']);
 
     // 环境
-    index.constant('IPprefix','http://172.16.7.235:8000/');
+    // index.constant('IPprefix','http://172.16.7.235:8000/');
+    index.constant('IPprefix','http://dev.artally.com.cn/copyright/');
     //账户信息
     index.constant('userInfo',JSON.parse(sessionStorage.getItem("userInfo")));
 
