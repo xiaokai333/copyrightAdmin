@@ -5,6 +5,7 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
     function($scope,getMsg,postJson,$http,IPprefix,$state,showModal){
 
         //初始化
+        $scope.save = false;
         $scope.business={};
         $scope.affirm=false;
         //查找编号对应信息
@@ -47,8 +48,9 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
         }
 
         //生成业务数据按钮
-        $scope.save=function(){
+        $scope.create=function(){
             if($scope.affirm){
+                $scope.save = true;
                 var obj={
                     apply_id:$scope.artwork.id,
                     sale_num:$scope.business.number,

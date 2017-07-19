@@ -3,7 +3,7 @@
     <div class="row margin-bottom">
         <h2 class="col-md-10">业务数据/ 业务录入</h2>
     </div>
-    <form ng-submit="save()">
+    <form ng-submit="create()">
         <h4 class="margin-bottom">业务基本信息</h4>
         <div class="row margin-bottom">
             <span style="color: red;" class="col-md-1 text-right">*</span>
@@ -55,7 +55,7 @@
                 <span class="input-group-addon">元</span>
             </div>
         </div>
-        <button class="btn btn-info col-md-offset-3" type="submit">生成业务单据</button>
+        <button class="btn btn-info col-md-offset-3" type="submit" ng-disabled="save">生成业务单据</button>
     </form>
 </div>
 
