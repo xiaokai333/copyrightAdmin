@@ -5,7 +5,7 @@ index.controller('artworkAccreditCtrl',['$scope','$location','$stateParams','get
     function($scope,$location,$stateParams,getMsg,postJson,$window,$state,showModal){
 
         var artworkId = $stateParams['artworkId'];
-
+        $scope.open = false;
         $scope.addSub = function(){
             var subject='';
             $scope.subject.push(subject);
@@ -26,6 +26,31 @@ index.controller('artworkAccreditCtrl',['$scope','$location','$stateParams','get
                     $scope.isload=true;
                     $scope.hasAuthorize = true;
                     $scope.authorize = resp.data.data;
+                    // 计算对账和核算日期
+                    // 授权时间
+                    var accountTime=new Date($scope.authorize.authorize_time.split(' ')[0])
+                    // 有效时间
+                    let useyear=accountTime.getFullYear()+$scope.authorize.authorize_period;
+                    let usemonth=accountTime.getMonth()
+                    let usedate=accountTime.getDate()
+                    var usefulTime=new Date(useyear,usemonth,usedate)
+                    // 当前时间
+                    var nowDate = new Date()
+                    // 对账时间
+                    var monthDate = new Date(nowDate.getFullYear(),nowDate.getMonth()+1,1,-1)
+                    // 核算时间
+                    var yearDate=accountTime
+                    while(yearDate<nowDate){
+                        yearDate=new Date(yearDate.getFullYear(),yearDate.getMonth()+7,1,-1)
+                    }
+                    if(nowDate<usefulTime){
+                        $scope.monthDate = monthDate.getFullYear()+'年'+(monthDate.getMonth()+1)+'月'+monthDate.getDate()+'日';
+                        $scope.yearDate = yearDate.getFullYear()+'年'+(yearDate.getMonth()+1)+'月'+yearDate.getDate()+'日';
+                    }else{
+                        $scope.monthDate = '已逾期'
+                        $scope.yearDate = '已逾期'
+                    }
+                    $scope.open = true;
                 }else{
                     $scope.hasAuthorize = false;
                     var title=resp.data.message+",请去艺术家档案填充";
@@ -36,12 +61,7 @@ index.controller('artworkAccreditCtrl',['$scope','$location','$stateParams','get
 
         //跳过按钮
         $scope.skip=function(){
-            //var title="确认跳过授权信息登记？";
-            //showModal("confirm",title,$scope);
-            //$scope.yes=function(){
-                //$('#myModal').modal('hide');
-                $location.path('/tabs/artwork/list');
-            //}
+            $location.path('/tabs/artwork/list');
         }
 
         //获取该艺术品授权信息
@@ -50,7 +70,9 @@ index.controller('artworkAccreditCtrl',['$scope','$location','$stateParams','get
                     $scope.artwork = resp.data.data;
                     if($scope.artwork.authorize_body){
                         $scope.subject = $scope.artwork.authorize_body.split(',');
+                        $scope.loadArtist($scope.artwork.artist);
                     }else{
+                        $scope.open = false;
                         $scope.subject = [$scope.artwork.artist_name];
                     }
                 }
@@ -70,6 +92,8 @@ index.controller('artworkAccreditCtrl',['$scope','$location','$stateParams','get
                     postJson.do("work/authorize/"+artworkId,obj).then(function(resp){
                         if(resp.data.code===0){
                             $state.go("tabs.artwork/list");
+                        }else{
+                            showModal("alert",resp.data.message,$scope);
                         }
                     })
                 }

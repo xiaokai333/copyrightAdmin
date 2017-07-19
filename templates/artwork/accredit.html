@@ -33,7 +33,7 @@
             <button type="button" class="btn btn-default" ng-click="loadArtist(artwork.artist)" ng-disabled="isAuthorize">+载入该艺术家授权信息</button>
         </div>
 
-    <div ng-if="authorize.id">
+    <div ng-show="open">
         <div class="row margin-bottom">
             <h2 class="col-md-5">艺术家授权信息</h2>
         </div>
@@ -164,9 +164,14 @@
             <span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
         </div>
         <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">{{monthDate}}</span>
+        </div>
+        <div class="row margin-bottom">
             <span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
         </div>
-        <button class="btn btn-info col-md-offset-3 margin-bottom" type="button">修改授权信息</button>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">{{yearDate}}</span>
+        </div>
     </div>
         <div class="col-md-10">
             <button type="button" class="btn btn-primary skip margin-left" ng-click="skip()">跳过</button>

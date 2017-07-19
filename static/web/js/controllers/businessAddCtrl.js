@@ -57,6 +57,8 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
                 postJson.do("add/business",obj).then(function (resp) {
                     if(resp.data.code === 0){
                         $state.go("tabs.business/list");
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }else{

@@ -18,9 +18,10 @@
             <th class="text-center">版权ID</th>
             <th class="text-center">作品名称</th>
             <th class="text-center">图片预览</th>
+            <th class="text-center">数据录入时间</th>
             <th class="text-center">渠道</th>
             <th class="text-center">单价</th>
-            <th class="text-center">印数</th>
+            <th class="text-center">销售数量</th>
             <th class="text-center">总价</th>
             <th class="text-center">制作类型</th>
             <th class="text-center">艺术家分成</th>
@@ -31,7 +32,8 @@
             <td class="text-center">{{item.apply_number}}</td>
             <td class="text-center">{{item.copyright_number}}</td>
             <td class="text-center">{{item.name}}</td>
-            <td class="text-center"><img ng-src="{{item.cover}}" alt=""></td>
+            <td class="text-center"><img class="sImg" ng-src="{{item.cover}}" alt=""></td>
+            <td class="text-center">{{item.create_time}}</td>
             <td class="text-center">{{item.channel_info}}</td>
             <td class="text-center">{{item.unit_price}}</td>
             <td class="text-center">{{item.number}}</td>

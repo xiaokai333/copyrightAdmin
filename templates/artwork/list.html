@@ -9,12 +9,14 @@
         <div class="input-group col-md-5 pull-left" style="margin-top: 10px;">
             <span class="input-group-addon" id="kind">作品分类</span>
             <select class="form-control" ng-model="searchKind" ng-options="o.id as o.text for o in tags.kind_tag">
+                <option value="">全部</option>
             </select>
         </div>
         <div class="col-md-2"></div>
         <div class="input-group col-md-5 pull-left" style="margin-top: 10px;">
             <span class="input-group-addon" id="shape">画作形状</span>
             <select class="form-control" ng-model="searchShape" ng-options="o.id as o.text for o in tags.work_shapes">
+                <option value="">全部</option>
             </select>
         </div>
     </div>
@@ -45,8 +47,11 @@
         </div>
     </div>
     <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="search(searchText,searchKind,searchShape)">搜索</div>
-    <button type="button" class="btn btn-info pull-right" ui-sref="tabs.artwork/artwork({artworkId:'NaN'})" ng-show="{{userInfo.data}} != 3">+ 创建艺术品</button>
+    <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="clear()">清空</div>
 </header>
+
+<button type="button" class="btn btn-info pull-right" ui-sref="tabs.artwork/artwork({artworkId:'NaN'})" ng-show="{{userInfo.data}} != 3">+ 创建艺术品</button>
+
 <section class="margin-bottom">
     <table class="table table-bordered">
         <tr>
@@ -63,7 +68,7 @@
             <th class="text-center">审批</th>
         </tr>
         <tr ng-repeat="item in artworkList">
-            <td class="text-center"><input type="checkbox" ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)"></td>
+            <td class="text-center"><input type="checkbox" ng-checked="isSelected('selected',item.id)" ng-click="updateSelection('selected',$event,item.id)"></td>
             <td class="text-center"><a ui-sref="tabs.artwork/detail({artworkId:item.id})">{{item.copyright_number}}</a></td>
             <td class="text-center">{{item.name}}</td>
             <td class="text-center"><img class="sImg" ng-src="{{item.cover}}" alt=""></td>
