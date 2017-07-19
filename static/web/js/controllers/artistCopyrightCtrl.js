@@ -101,12 +101,10 @@ index.controller('artistsCopyrightCtrl', ['$scope','$stateParams','getMsg','$htt
 	// 判断ID类型，编辑或新建
 	if(isFinite($stateParams.artistID)){
 		$scope.id=sessionStorage.getItem('id')
-		sessionStorage.removeItem('id')
 		$scope.name=sessionStorage.getItem('name')
-		sessionStorage.removeItem('name')
 		// 获取授权卡信息
 		getMsg.do('authorize/detail/'+$stateParams.artistID).then(function(res){
-			if(res.status===200){
+			if(res.data.code==0){
 				// console.log(res)
 				$scope.mainData=res.data.data
 
@@ -134,6 +132,8 @@ index.controller('artistsCopyrightCtrl', ['$scope','$stateParams','getMsg','$htt
 				insertData('body_derive',4)
 				insertData('number_derive',5)
 				insertData('business_authorize',6)
+			}else{
+				showModal('alert',res.message,$scope)
 			}
 		})
 
@@ -153,16 +153,15 @@ index.controller('artistsCopyrightCtrl', ['$scope','$stateParams','getMsg','$htt
 					console.log(res)
 				if(res.data.code==0){
 					$state.go('tabs.artistsFiles/list')
+				}else{
+					showModal('alert',res.message,$scope)
 				}
 			})
 		}
 	}else{
 		$scope.headIMG=sessionStorage.getItem('img')
-		sessionStorage.removeItem('img')
 		$scope.id=sessionStorage.getItem('id')
-		sessionStorage.removeItem('id')
 		$scope.name=sessionStorage.getItem('name')
-		sessionStorage.removeItem('name')
 		// 提交按钮，新建授权卡
 		$scope.sub = function(){
 			if(!$scope.accreditArea>0){
@@ -179,6 +178,8 @@ index.controller('artistsCopyrightCtrl', ['$scope','$stateParams','getMsg','$htt
 					console.log(res)	
 				if(res.data.code==0){
 					$state.go('tabs.artistsFiles/list')
+				}else{
+					showModal('alert',res.message,$scope)
 				}
 			})
 		}

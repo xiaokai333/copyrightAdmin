@@ -30,15 +30,21 @@ index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPpre
             });
         };
     }
+    // 取消按钮
+	$scope.no=function(){
+		$('#myModal').modal('hide')
+	}
 	// 判断艺术家ID
 	if(isFinite($stateParams.artistID)){
 		$scope.saveBTN='保存';
 		$scope.headFlag=false;
 		// 列表数据获取
 		getMsg.do('artist/detail/'+$stateParams.artistID).then(function(res){
-			if(res.status===200){
+			if(res.data.code==0){
 				// console.log(res)
 				$scope.mainData=res.data.data
+			}else{
+				showModal('alert',res.message,$scope)
 			}
 		})
 		// 保存并下一步,编辑艺术家信息
@@ -65,8 +71,10 @@ index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPpre
 				transformRequest: angular.identity 
 			}).then(function(res){
 					// console.log(res)
-				if(res.status===200){
+				if(res.data.code==0){
 					$state.go('tabs.artistsFiles/list')
+				}else{
+					showModal('alert',res.message,$scope)
 				}
 			})
 		}
@@ -101,6 +109,8 @@ index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPpre
 			    	sessionStorage.setItem('id', res.data.artist_number)
 			    	sessionStorage.setItem('name', res.data.artist_name)
 					$location.path('tabs/artistsFiles/copyright/'+res.data.artist_id+'NaN')
+				}else{
+					showModal('alert',res.message,$scope)
 				}
 			})
 		}

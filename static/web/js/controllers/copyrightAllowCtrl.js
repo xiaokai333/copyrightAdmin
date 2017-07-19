@@ -11,10 +11,12 @@ index.controller('copyrightAllowCtrl', ['$scope','getMsg','postJson','userInfo',
 	$scope.user=userInfo.data
 	// 列表数据获取
 	getMsg.do('list/apply/').then(function(res){
-		if(res.status===200){
+		if(res.data.code==0){
 			// console.log(res)
 			$scope.mainData=res.data.data
-		}
+		}else{
+            showModal('alert',res.message,$scope)
+        }
 	})
 
 	//搜索
@@ -28,6 +30,8 @@ index.controller('copyrightAllowCtrl', ['$scope','getMsg','postJson','userInfo',
             ).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.mainData=resp.data.data;
+                }else{
+                    showModal('alert',res.message,$scope)
                 }
             })
         }
@@ -48,6 +52,9 @@ index.controller('copyrightAllowCtrl', ['$scope','getMsg','postJson','userInfo',
                                 // console.log(res)
                                 $scope.mainData=res.data.data
                                 $('#myModal').modal('hide')
+                            }else{
+                                $('#myModal').modal('hide')
+                                showModal('alert',res.message,$scope)
                             }
                         })
                     }
@@ -66,6 +73,9 @@ index.controller('copyrightAllowCtrl', ['$scope','getMsg','postJson','userInfo',
                                 // console.log(res)
                                 $scope.mainData=res.data.data
                                 $('#myModal').modal('hide')
+                            }else{
+                                $('#myModal').modal('hide')
+                                showModal('alert',res.message,$scope)
                             }
                         })
                     }

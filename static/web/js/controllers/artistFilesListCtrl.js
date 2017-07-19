@@ -11,9 +11,11 @@ index.controller('artistsFilesListCtrl', ['$scope','postJson','getMsg','$state',
 	$scope.user=userInfo.data
 	// 列表数据获取
 	getMsg.do('list/artist/').then(function(res){
-		if(res.status===200){
+		if(res.data.code==0){
 			// console.log(res)
 			$scope.mainData=res.data.data
+		}else{
+			showModal('alert',res.message,$scope)
 		}
 	})
     
@@ -28,7 +30,9 @@ index.controller('artistsFilesListCtrl', ['$scope','postJson','getMsg','$state',
             ).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.mainData=resp.data.data;
-                }
+                }else{
+					showModal('alert',res.message,$scope)
+				}
             })
         }
     };
@@ -94,10 +98,13 @@ index.controller('artistsFilesListCtrl', ['$scope','postJson','getMsg','$state',
 			$scope.yes=function(){
 				postJson.do('delete/artist/',{"artist_ids":$scope.selected.join()}).then(function(res){
 					// console.log(res)
-					if(res.status===200){
+					if(res.data.code==0){
 						$scope.mainData=res.data.data
 						$('#myModal').modal('hide')
 						$scope.selected=[];	// 选择多项
+					}else{
+						$('#myModal').modal('hide')
+						showModal('alert',res.message,$scope)
 					}
 				})
 			}
@@ -111,6 +118,9 @@ index.controller('artistsFilesListCtrl', ['$scope','postJson','getMsg','$state',
 						$('#myModal').modal('hide')
 						$scope.selected=[];	// 选择多项
 						window.open(res.data.path)
+					}else{
+						$('#myModal').modal('hide')
+						showModal('alert',res.message,$scope)
 					}
 				})
 			}

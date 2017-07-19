@@ -133,20 +133,8 @@
 				<input ng-show="txt6" type="number" min="0" max="100" ng-model='business_authorizeTxt' style="width: 50px;" ng-required='business_authorize=="other"'><span ng-show="txt6">%</span>
 			</div>
 		</div>
-		<div class="row margin-bottom">
-			<span class="col-md-1"></span>
-			<span class="col-md-3 h5">核算周期（自动生成）</span>
-		</div>
-		<div class="row margin-bottom">
-			<span class="col-md-1"></span>
-			<span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
-		</div>
-		<div class="row margin-bottom">
-			<span class="col-md-1"></span>
-			<span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
-		</div>
-		<button class="btn btn-info col-md-offset-1" type="button" ng-click="skip()">跳过</button>
-		<button class="btn btn-info col-md-offset-1" type="submit">提交信息</button>
+		<button class="btn btn-info col-md-offset-1" type="button" ng-click="skip()">取消</button>
+		<button class="btn btn-info col-md-offset-1" type="submit">保存</button>
 	</form>
 </div>
 
