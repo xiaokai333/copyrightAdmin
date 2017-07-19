@@ -97,6 +97,9 @@ index.controller('artistsCtrl', ['$scope','$stateParams','getMsg','$http','IPpre
 			}).then(function(res){
 					// console.log(res)
 				if(res.data.code==0){
+					sessionStorage.setItem('img', res.data.artist_head)
+			    	sessionStorage.setItem('id', res.data.artist_number)
+			    	sessionStorage.setItem('name', res.data.artist_name)
 					$location.path('tabs/artistsFiles/copyright/'+res.data.artist_id+'NaN')
 				}
 			})
