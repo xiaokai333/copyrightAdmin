@@ -7,6 +7,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
 
         //初始化
         var artworkId = $stateParams['artworkId'];
+        $scope.save = false;
         $scope.artworkId=artworkId;
         var keys = ['name', 'artist', 'year','kind','category','material','shape','is_variable',
             'width', 'height', 'length', 'color', 'tag','sale_state',
@@ -49,8 +50,9 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                         $scope.isSearch = true;
                     }else{
                         $scope.isSearch = false;
-                        showModal("alert",resp.data.message,$scope);
                     }
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
         }
@@ -118,7 +120,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 $scope.artwork.store='';
             }
             //分类,类型,形状
-            if(typeof ($scope.artwork.artist)=="undefined" || typeof ($scope.artwork.kind)=="undefined" || typeof ($scope.artwork.category)=="undefined" || typeof ($scope.artwork.shape)=="undefined"){
+            if(typeof ($scope.artwork.artist)=="undefined" || typeof ($scope.artwork.kind)=="undefined" || typeof ($scope.artwork.shape)=="undefined"){
                 var title = "请检查作品信息是否填写完整";
                 showModal('alert',title,$scope);
                 $scope.checkd=false;
@@ -153,7 +155,6 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 }
             }
             modelToFormData(sendData,$scope.artwork,keys);
-
         }
 
         //获取单个艺术品信息
@@ -213,6 +214,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 //图片单独追加
                 sendData.append("cover",$scope.coverPic);
                 if($scope.checkd){
+                    $scope.save = true;
                     $http({
                         method:'POST',
                         url:IPprefix+"add/work/",
@@ -225,7 +227,6 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                             $location.path("/tabs/artwork/list");
                         }else{
                             showModal("alert",resp.data.message,$scope);
-                            return;
                         }
                     })
                 }
