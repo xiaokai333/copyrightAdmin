@@ -23,8 +23,9 @@
 			<th class="text-center">展览记录</th>
 			<th class="text-center">艺术家信息</th>
 			<th class="text-center">授权卡</th>
+			<th class="text-center">艺术家状态</th>
 		</tr>
-		<tr ng-repeat="(index,item) in mainData">
+		<tr ng-repeat="(index,item) in mainData | filter:searchText">
 			<td class="text-center">
 				<input type="checkbox" ng-checked="isChecked(item.id)" ng-click="updateSelection($event,item.id)">
 			</td>
@@ -42,13 +43,19 @@
 				<button ng-show="item.authorizer_id!=''" type="button" class="btn btn-default" ui-sref="tabs.artistsFiles/copyright({artistID:item.authorizer_id})"  ng-disabled="user==3" ng-click="addS(item)">编辑</button>
 				<button ng-show="item.authorizer_id==''" type="button" class="btn btn-default" ui-sref="tabs.artistsFiles/copyright({artistID:item.id+'NaN'})" ng-disabled="user==3" ng-click="addS(item)">添加</button>
 			</td>
+			<td class="text-center">
+				<select ng-model='item.state' ng-change="artistState(item)">
+					<option ng-value="0">失效</option>
+					<option ng-value="1">有效</option>
+				</select>
+			</td>
 		</tr>
 	</table>
 </section>
 <footer>
 	<input type="checkbox" ng-checked="isCheckedAll()" ng-click="selectAll($event)"> 全选
 	<button type="button" class="btn btn-info pull-right" ng-click="button('print')">打印</button>
-	<button type="button" class="btn btn-danger pull-right" ng-click="button('del')" style="margin-right: 10px;" ng-hide="user==3">删除</button>
+	<button type="button" class="btn btn-danger pull-right" ng-click="button('del')" style="margin-right: 10px;" ng-hide="user==3" ng-if="false">删除</button>
 </footer>
 
 <!-- 模态框 -->

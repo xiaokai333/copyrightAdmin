@@ -19,6 +19,18 @@ index.controller('artistsFilesListCtrl', ['$scope','postJson','getMsg','$state',
 		}
 	})
     
+    // 失效
+    $scope.artistState = function(item){  
+        postJson.do('update/artist/state/'+item.id,{"state":item.state}).then(function(res){
+			// console.log(res)
+			if(res.data.code==0){
+				// console.log('ok')
+			}else{
+				$('#myModal').modal('hide')
+				showModal('alert',res.message,$scope)
+			}
+		})
+    }
 	// 搜索框功能
     $scope.search = function(searchText){
         if(searchText){

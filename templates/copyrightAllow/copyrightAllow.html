@@ -14,29 +14,36 @@
 		<tr>
 			<th class="text-center"></th>
 			<th class="text-center">审批编号</th>
+			<th class="text-center">作者</th>
 			<th class="text-center">版权ID</th>
 			<th class="text-center">作品名称</th>
 			<th class="text-center">图片预览</th>
-			<th class="text-center">作者</th>
+			<th class="text-center">渠道</th>
 			<th class="text-center">印数</th>
 			<th class="text-center">制作类型</th>
 			<th class="text-center">发起人</th>
+			<th class="text-center">审批发起时间</th>
 			<th class="text-center">审批</th>
 		</tr>
-		<tr ng-repeat="(index,item) in mainData">
+		<tr ng-repeat="(index,item) in mainData | filter:searchText">
 			<td class="text-center">
 				<input type="checkbox" ng-checked="isChecked(item.id)" ng-click="updateSelection($event,item.id)" ng-if="false">{{index+1}}
 			</td>
 			<td class="text-center">{{item.apply_number}}</td>
+			<td class="text-center">{{item.artist_name}}</td>
 			<td class="text-center">{{item.works.copyright_number}}</td>
 			<td class="text-center">{{item.works.name}}</td>
 			<td class="text-center"><img class="sImg" ng-src="{{item.works.cover}}" alt=""></td>
-			<td class="text-center">{{item.artist_name}}</td>
+			<td class="text-center" ng-show="item.channel_info==1">租租艺术</td>
+			<td class="text-center" ng-show="item.channel_info==2">艺术头等舱</td>
+			<td class="text-center" ng-show="item.channel_info==3">淘宝</td>
+			<td class="text-center" ng-show="item.channel_info==4">有赞</td>
 			<td class="text-center">{{item.number}}</td>
 			<td class="text-center" ng-show="item.types==1">复制版画</td>
 			<td class="text-center" ng-show="item.types==2">限量版</td>
 			<td class="text-center" ng-show="item.types==3">签名限量版</td>
 			<td class="text-center">{{item.username}}</td>
+			<td class="text-center">{{item.create_time}}</td>
 			<td class="text-center" ng-show="user!=3">
 				<button ng-show="item.state==1" type="button" class="btn btn-default" ng-click="deal(1,item.id)">同意</button>
 				<button ng-show="item.state==1" type="button" class="btn btn-default" ng-click="deal(0,item.id)">拒绝</button>
