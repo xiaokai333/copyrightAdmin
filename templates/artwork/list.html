@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="search(searchText,searchKind,searchShape)">搜索</div>
-    <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="clear()">清空</div>
+    <div class="row col-md-4 btn btn-default" style="margin-top: 20px;margin-left: 50px;" ng-click="clear(searchText,searchKind,searchShape)">清空</div>
 </header>
 
 <button type="button" class="btn btn-info pull-right" ui-sref="tabs.artwork/artwork({artworkId:'NaN'})" ng-show="{{userInfo.data}} != 3">+ 创建艺术品</button>

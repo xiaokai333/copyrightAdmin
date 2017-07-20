@@ -231,8 +231,10 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
             }
         };
         //清空搜索
-        $scope.clear=function(){
-            $window.location.reload();
+        $scope.clear=function(searchText,searchKind,searchShape){
+            if(searchText != undefined || searchKind != undefined || searchShape != undefined || $scope.colorSelected.length > 0 || $scope.themeSelected.length > 0 || $scope.styleSelected.length > 0) {
+                $window.location.reload();
+            }
         }
         // 取消按钮
         $scope.no=function(){
