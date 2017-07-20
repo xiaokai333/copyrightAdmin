@@ -2,9 +2,10 @@
     <h1 class="pull-left">艺术家收入核算</h1>
     <div class="col-lg-6 pull-left">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="支持作者搜索" ng-model="searchText">
+            <input type="text" class="form-control" placeholder="支持作者、审批单号、版权ID、作品名称搜索" ng-model="searchText">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>
+				<!--<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>-->
+				<button class="btn btn-default" type="button">搜索</button>
 			</span>
         </div>
     </div>
@@ -26,7 +27,7 @@
             <th class="text-center">制作类型</th>
             <th class="text-center">艺术家分成</th>
         </tr>
-        <tr ng-repeat="item in incomeList">
+        <tr ng-repeat="item in incomeList | filter:searchText">
             <td class="text-center"><input type="checkbox" ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)"></td>
             <td class="text-center">{{item.artist}}</td>
             <td class="text-center">{{item.apply_number}}</td>

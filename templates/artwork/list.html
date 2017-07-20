@@ -83,7 +83,7 @@
                 <button type="button" class="btn btn-default" ng-show="item.authorize_body == null " ui-sref="tabs.artwork/accredit({artworkId:item.id})" ng-disabled="{{userInfo.data}} == 3">添加</button>
                 <button type="button" class="btn btn-default" ng-show="item.authorize_body != null " ui-sref="tabs.artwork/accredit({artworkId:item.id})" ng-disabled="{{userInfo.data}} == 3">编辑</button>
             </td>
-            <td class="text-center"><button class="btn btn-default" ng-disabled="item.authorize_body == null" ui-sref="tabs.artwork/request({artworkId:item.id})">发起</button></td>
+            <td class="text-center"><button class="btn btn-default" ng-disabled="item.state == 0 || item.authorize_body == null" ui-sref="tabs.artwork/request({artworkId:item.id})">发起</button></td>
         </tr>
     </table>
 </section>

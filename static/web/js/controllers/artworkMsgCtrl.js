@@ -61,15 +61,6 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             $scope.isSearch = false;
         }
 
-        //通过所选作品分类判断类型/材质的选项内容
-        function checkKind(){
-            if($scope.artwork.kind == 1){
-                console.log(1)
-            }else if($scope.artwork.kind == 2){
-                console.log(2)
-            }
-        }
-        checkKind();
 
         //色系/标签复选框选择获取id
         $scope.colorSelected = [];
@@ -191,6 +182,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                     sendData.append("cover",$scope.artwork.cover);
                 }
                 if($scope.checkd) {
+                    $scope.save = true;
                     $http({
                         method:'POST',
                         url:IPprefix+"update/work/"+artworkId,
