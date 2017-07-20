@@ -6,7 +6,7 @@
     <form action="">
         <div class="row margin-bottom">
             <div class="col-md-3">
-                <img class="bImg" ng-src="{{artwork.cover}}" alt="艺术品">
+                <img style="width: 600px;height: 600px;" ng-src="{{artwork.cover}}" alt="艺术品">
             </div>
         </div>
         <div class="row margin-bottom">
@@ -270,7 +270,13 @@
             <span class="col-md-5 margin-left">对账（授权时间开始当月末时间）</span>
         </div>
         <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">{{monthDate}}</span>
+        </div>
+        <div class="row margin-bottom">
             <span class="col-md-5 margin-left">核算（授权时间开始6个月末时间）</span>
+        </div>
+        <div class="row margin-bottom">
+            <span class="col-md-5 margin-left">{{yearDate}}</span>
         </div>
         <button class="btn btn-info col-md-offset-3" type="button" ng-disabled="{{userInfo.data}} == 3">修改授权信息</button>
     </div>

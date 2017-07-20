@@ -59,6 +59,8 @@ index.controller('incomeCtrl', ['$scope','getMsg','postJson','$http','$window','
                 if(resp.data.code === 0){
                     $('#myModal').modal('hide');
                     $scope.incomeList=resp.data.data;
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
         }
@@ -83,6 +85,8 @@ index.controller('incomeCtrl', ['$scope','getMsg','postJson','$http','$window','
                 if(resp.data.code === 0){
                     $('#myModal').modal('hide');
                     $window.open(resp.data.path);
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
         }
@@ -98,6 +102,8 @@ index.controller('incomeCtrl', ['$scope','getMsg','postJson','$http','$window','
             ).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.incomeList=resp.data.data;
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
         }

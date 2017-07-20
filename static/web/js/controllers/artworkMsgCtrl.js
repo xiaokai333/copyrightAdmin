@@ -7,6 +7,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
 
         //初始化
         var artworkId = $stateParams['artworkId'];
+        $scope.save = false;
         $scope.artworkId=artworkId;
         var keys = ['name', 'artist', 'year','kind','category','material','shape','is_variable',
             'width', 'height', 'length', 'color', 'tag','sale_state',
@@ -38,21 +39,28 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             };
         }
         //输入作者名字必须根据推荐
-            getMsg.do("search/artist").then(function(resp){
-                if(resp.data.code===0){
+        $scope.isSearch = false;
+        $scope.searchName=function(text){
+            $http(
+                {method:'GET',url:IPprefix+"search/artist",params:{search:text}}
+            ).then(function(resp){
+                if(resp.data.code === 0){
                     $scope.artistList=resp.data.data;
+                    if($scope.artistList.length > 0){
+                        $scope.isSearch = true;
+                    }else{
+                        $scope.isSearch = false;
+                    }
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
-
-        //通过所选作品分类判断类型/材质的选项内容
-        function checkKind(){
-            if($scope.artwork.kind == 1){
-                console.log(1)
-            }else if($scope.artwork.kind == 2){
-                console.log(2)
-            }
         }
-        checkKind();
+        $scope.updateName=function($event){
+            $scope.artistName = $event.target.label;
+            $scope.isSearch = false;
+        }
+
 
         //色系/标签复选框选择获取id
         $scope.colorSelected = [];
@@ -103,7 +111,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 $scope.artwork.store='';
             }
             //分类,类型,形状
-            if(typeof ($scope.artwork.artist)=="undefined" || typeof ($scope.artwork.kind)=="undefined" || typeof ($scope.artwork.category)=="undefined" || typeof ($scope.artwork.shape)=="undefined"){
+            if(typeof ($scope.artwork.artist)=="undefined" || typeof ($scope.artwork.kind)=="undefined" || typeof ($scope.artwork.shape)=="undefined"){
                 var title = "请检查作品信息是否填写完整";
                 showModal('alert',title,$scope);
                 $scope.checkd=false;
@@ -138,7 +146,6 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 }
             }
             modelToFormData(sendData,$scope.artwork,keys);
-
         }
 
         //获取单个艺术品信息
@@ -147,6 +154,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             getMsg.do("work/detail/"+artworkId).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.artwork=resp.data.data;
+                    $scope.artistName=$scope.artwork.artist_name;
                     //标签数据由字符串转换为数组
                     resp.data.data.color.split(",").forEach(function(color){
                         var colorid=Number(color);
@@ -160,6 +168,8 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                         var styleid=Number(style);
                         $scope.styleSelected.push(styleid);
                     })
+                }else{
+                    showModal("alert",resp.data.message,$scope);
                 }
             })
             //更新艺术品数据
@@ -172,6 +182,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                     sendData.append("cover",$scope.artwork.cover);
                 }
                 if($scope.checkd) {
+                    $scope.save = true;
                     $http({
                         method:'POST',
                         url:IPprefix+"update/work/"+artworkId,
@@ -180,11 +191,9 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                         transformRequest: angular.identity
                     }).then(function(resp){
                         if(resp.data.code === 0){
-                            $location.path("/tabs/artwork/accredit/"+artworkId);
+                            $location.path("/tabs/artwork/list");
                         }else{
-                            // 设置alert弹框
-                            var title='更新信息失败！';
-                            showModal('alert',title,$scope)
+                            showModal("alert",resp.data.message,$scope);
                             return;
                         }
                     })
@@ -197,6 +206,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 //图片单独追加
                 sendData.append("cover",$scope.coverPic);
                 if($scope.checkd){
+                    $scope.save = true;
                     $http({
                         method:'POST',
                         url:IPprefix+"add/work/",
@@ -204,14 +214,11 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                         headers: {'Content-Type':undefined},
                         transformRequest: angular.identity
                     }).then(function(resp){
-                        console.log(resp)
                         if(resp.data.code === 0){
-                            $location.path("/tabs/artwork/accredit/"+resp.data.work_id);
+                            //$location.path("/tabs/artwork/accredit/"+resp.data.work_id);
+                            $location.path("/tabs/artwork/list");
                         }else{
-                            // 设置alert弹框
-                            var title='创建艺术品失败！';
-                            showModal('alert',title,$scope)
-                            return;
+                            showModal("alert",resp.data.message,$scope);
                         }
                     })
                 }

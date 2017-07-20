@@ -2,9 +2,10 @@
     <h1 class="pull-left">业务数据</h1>
     <div class="col-lg-6 pull-left">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="支持作者搜索" ng-model="searchText">
+            <input type="text" class="form-control" placeholder="支持审批单号、作者、版权ID、作品名称搜索" ng-model="searchText">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>
+				<!--<button class="btn btn-default" type="button" ng-click="search(searchText)">搜索</button>-->
+				<button class="btn btn-default" type="button">搜索</button>
 			</span>
         </div>
     </div>
@@ -21,20 +22,20 @@
             <th class="text-center">图片预览</th>
             <th class="text-center">渠道</th>
             <th class="text-center">单价</th>
-            <th class="text-center">印数</th>
+            <th class="text-center">销售数量</th>
             <th class="text-center">总价</th>
             <th class="text-center">制作类型</th>
             <th class="text-center">发起人</th>
             <th class="text-center">审批通过时间</th>
             <th class="text-center">数据录入时间</th>
         </tr>
-        <tr ng-repeat="item in businessList">
+        <tr ng-repeat="item in businessList | filter:searchText">
             <td class="text-center"><input type="checkbox" ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)"></td>
             <td class="text-center">{{item.apply_number}}</td>
             <td class="text-center">{{item.artist}}</td>
             <td class="text-center">{{item.copyright_number}}</td>
             <td class="text-center">{{item.name}}</td>
-            <td class="text-center"><img ng-src="{{item.name}}" alt=""></td>
+            <td class="text-center"><img class="sImg" ng-src="{{item.cover}}" alt=""></td>
             <td class="text-center">{{item.channel_info}}</td>
             <td class="text-center">{{item.unit_price}}</td>
             <td class="text-center">{{item.number}}</td>

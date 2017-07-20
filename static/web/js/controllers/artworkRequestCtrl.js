@@ -15,6 +15,8 @@ index.controller('artworkRequestCtrl',['$scope','$stateParams','getMsg','postJso
         getMsg.do("work/detail/"+artworkId).then(function(resp){
             if(resp.data.code === 0){
                 $scope.artwork = resp.data.data;
+            }else{
+                showModal("alert",resp.data.message,$scope);
             }
         })
 
@@ -31,6 +33,8 @@ index.controller('artworkRequestCtrl',['$scope','$stateParams','getMsg','postJso
                 postJson.do("add/apply",$scope.request).then(function(resp){
                     if(resp.data.code === 0){
                         $state.go("tabs.artwork/list");
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }

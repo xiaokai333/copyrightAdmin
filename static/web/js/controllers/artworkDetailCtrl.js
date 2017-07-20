@@ -114,8 +114,33 @@ index.controller('artworkDetailCtrl',['$scope','$stateParams','getMsg','userInfo
                         $scope.artwork.store_state = '其他收藏';
                         break;
                 }
+
+                // 计算对账和核算日期
+                // 授权时间
+                var accountTime=new Date($scope.authorize.authorize_time.split(' ')[0])
+                // 有效时间
+                let useyear=accountTime.getFullYear()+$scope.authorize.authorize_period;
+                let usemonth=accountTime.getMonth()
+                let usedate=accountTime.getDate()
+                var usefulTime=new Date(useyear,usemonth,usedate)
+                // 当前时间
+                var nowDate = new Date()
+                // 对账时间
+                var monthDate = new Date(nowDate.getFullYear(),nowDate.getMonth()+1,1,-1)
+                // 核算时间
+                var yearDate=accountTime
+                while(yearDate<nowDate){
+                    yearDate=new Date(yearDate.getFullYear(),yearDate.getMonth()+7,1,-1)
+                }
+                if(nowDate<usefulTime){
+                    $scope.monthDate = monthDate.getFullYear()+'年'+(monthDate.getMonth()+1)+'月'+monthDate.getDate()+'日';
+                    $scope.yearDate = yearDate.getFullYear()+'年'+(yearDate.getMonth()+1)+'月'+yearDate.getDate()+'日';
+                }else{
+                    $scope.monthDate = '已逾期'
+                    $scope.yearDate = '已逾期'
+                }
             }else{
-                showModal("alert","获取艺术品详情失败",$scope)
+                showModal("alert",resp.data.message,$scope);
             }
         })
 }])

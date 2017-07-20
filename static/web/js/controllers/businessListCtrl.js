@@ -30,6 +30,8 @@ index.controller('businessListCtrl', ['$scope','getMsg','$http','IPprefix','post
         getMsg.do('list/business').then(function(resp){
             if(resp.data.code === 0){
                 $scope.businessList=resp.data.data;
+            }else{
+                showModal("alert",resp.data.message,$scope);
             }
         })
         //全选
@@ -63,6 +65,8 @@ index.controller('businessListCtrl', ['$scope','getMsg','$http','IPprefix','post
                     if(resp.data.code === 0){
                         $('#myModal').modal('hide');
                         $window.open(resp.data.path);
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }
@@ -78,6 +82,8 @@ index.controller('businessListCtrl', ['$scope','getMsg','$http','IPprefix','post
                 ).then(function(resp){
                     if(resp.data.code === 0){
                         $scope.businessList=resp.data.data;
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }

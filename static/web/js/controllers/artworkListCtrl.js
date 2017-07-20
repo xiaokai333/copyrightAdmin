@@ -9,6 +9,7 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
         $scope.userInfo = userInfo;
 
         //下拉选项内容
+        //$http.get("http://172.16.7.235:8000/copyrights/work/choice").then(function(resp){
         $http.get("http://dev.artally.com.cn/copyrights/work/choice").then(function(resp){
             if(resp.data.code === 0){
                 var tag={};
@@ -95,6 +96,8 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                 tag.work_material = work_material;
                 localStorage.setItem("tag",JSON.stringify(tag));
                 $scope.tags = tag;
+            }else{
+                showModal("alert",resp.data.message,$scope);
             }
         })
 
@@ -121,18 +124,23 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
             return $scope[obj].indexOf(id)>=0;
         }
 
+        var material=function(obj){
+            var tag=JSON.parse(localStorage.getItem("tag"));
+            obj.forEach(function(list){
+                if(list.kind == 1 && (list.category == 1 || list.category ==2 || list.category ==3 || list.category ==4)){
+                    list.material=tag.work_material[list.category-1][list.material-1].text;
+                }else{
+                    list.material='未知';
+                }
+            })
+        }
         // 列表数据获取
         getMsg.do('list/work').then(function(resp){
             if(resp.data.code === 0){
                 $scope.artworkList=resp.data.data;
-                var tag=JSON.parse(localStorage.getItem("tag"));
-                $scope.artworkList.forEach(function(list){
-                    if(list.kind == 1 && (list.category == 1 || list.category ==2 || list.category ==3 || list.category ==4)){
-                        list.material=tag.work_material[list.category-1][list.material-1].text;
-                    }else{
-                        list.material='未知';
-                    }
-                })
+                material($scope.artworkList);
+            }else{
+                showModal("alert",resp.data.message,$scope);
             }
         })
         //全选
@@ -165,6 +173,8 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                         if(resp.data.code===0){
                             $('#myModal').modal('hide')
                             $scope.artworkList=resp.data.data;
+                        }else{
+                            showModal("alert",resp.data.message,$scope);
                         }
                     })
                 }
@@ -191,6 +201,8 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                     if(resp.data.code === 0){
                         $('#myModal').modal('hide')
                         $window.open(resp.data.path);
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }
@@ -198,8 +210,7 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
         }
         //搜索
         $scope.search = function(searchText,searchKind,searchShape){
-            //console.log(searchText,searchKind,searchShape,$scope.themeSelected,$scope.colorSelected,$scope.styleSelected)
-            if(searchText != '' || searchKind !='undefined' || searchShape !='undefined'|| $scope.colorSelected.length>0 || $scope.themeSelected.length>0 || $scope.styleSelected.length>0){
+            if(searchText != undefined || searchKind != undefined || searchShape != undefined || $scope.colorSelected.length > 0 || $scope.themeSelected.length > 0 || $scope.styleSelected.length > 0){
                 var info={
                     search:searchText,
                     kind:searchKind,
@@ -213,11 +224,17 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                 ).then(function(resp){
                     if(resp.data.code === 0){
                         $scope.artworkList=resp.data.data;
+                        material($scope.artworkList);
+                    }else{
+                        showModal("alert",resp.data.message,$scope);
                     }
                 })
             }
         };
-
+        //清空搜索
+        $scope.clear=function(){
+            $window.location.reload();
+        }
         // 取消按钮
         $scope.no=function(){
             $('#myModal').modal('hide')
