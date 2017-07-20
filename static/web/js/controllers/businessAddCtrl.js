@@ -60,6 +60,7 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
                     if(resp.data.code === 0){
                         $state.go("tabs.business/list");
                     }else{
+                        $scope.save = false;
                         showModal("alert",resp.data.message,$scope);
                     }
                 })

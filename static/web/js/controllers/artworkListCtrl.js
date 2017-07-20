@@ -14,18 +14,18 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
             if(resp.data.code === 0){
                 var tag={};
                 //作品分类
-                var kind_tag=[
-                    {id:1,text:"艺术品"},
-                    {id:2,text:"摄影"},
-                    {id:3,text:"影视娱乐IP"},
-                    {id:4,text:"动漫"},
-                    {id:5,text:"游戏"}
-                ];
+                //var kind_tag=[
+                //    {id:1,text:"艺术品"},
+                //    {id:2,text:"摄影"},
+                //    {id:3,text:"影视娱乐IP"},
+                //    {id:4,text:"动漫"},
+                //    {id:5,text:"游戏"}
+                //];
                 //摄影分类下作品类型
-                var work_types_shoot=[
-                    {id:1,text:"相纸"},
-                    {id:2,text:"数码微喷"}
-                ];
+                //var work_types_shoot=[
+                //    {id:1,text:"相纸"},
+                //    {id:2,text:"数码微喷"}
+                //];
 
                 //颜色集合
                 var color_tag=[
@@ -43,57 +43,56 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
                     {id:12,text:"#7b4611"}
                 ];
                 //材质
-                var work_material=[
-                    [
-                        {id:1,text:"布面油画"},
-                        {id:2,text:"布面丙烯"},
-                        {id:3,text:"木板油画"},
-                        {id:4,text:"纸板油画"},
-                        {id:5,text:"蛋彩"},
-                        {id:6,text:"油画棒"},
-                        {id:7,text:"纸上丙烯"},
-                        {id:8,text:"综合材料"},
-                    ],
-                    [
-                        {id:1,text:"绢本水墨"},
-                        {id:2,text:"绢本设色"},
-                        {id:3,text:"纸本设色"},
-                        {id:4,text:"纸本水墨"}
-                    ],
-                    [
-                        {id:1,text:"木刻版画"},
-                        {id:2,text:"铜版画"},
-                        {id:3,text:"石版画"},
-                        {id:4,text:"丝网版画"},
-                        {id:5,text:"综合版画"},
-                        {id:6,text:"数码版画"},
-                        {id:7,text:"水印木刻版画"}
-                    ],
-                    [
-                        {id:1,text:"不锈钢"},
-                        {id:2,text:"玻璃钢"},
-                        {id:3,text:"铜"},
-                        {id:4,text:"石材"},
-                        {id:5,text:"木雕"},
-                        {id:6,text:"水泥"},
-                        {id:7,text:"陶瓷"},
-                        {id:8,text:"泥塑"},
-                        {id:9,text:"3D打印"},
-                        {id:10,text:"雕塑综合材料"},
-                        {id:11,text:"石膏"},
-                    ]
-                ]
-
+                //var work_material=[
+                //    [
+                //        {id:1,text:"布面油画"},
+                //        {id:2,text:"布面丙烯"},
+                //        {id:3,text:"木板油画"},
+                //        {id:4,text:"纸板油画"},
+                //        {id:5,text:"蛋彩"},
+                //        {id:6,text:"油画棒"},
+                //        {id:7,text:"纸上丙烯"},
+                //        {id:8,text:"综合材料"},
+                //    ],
+                //    [
+                //        {id:1,text:"绢本水墨"},
+                //        {id:2,text:"绢本设色"},
+                //        {id:3,text:"纸本设色"},
+                //        {id:4,text:"纸本水墨"}
+                //    ],
+                //    [
+                //        {id:1,text:"木刻版画"},
+                //        {id:2,text:"铜版画"},
+                //        {id:3,text:"石版画"},
+                //        {id:4,text:"丝网版画"},
+                //        {id:5,text:"综合版画"},
+                //        {id:6,text:"数码版画"},
+                //        {id:7,text:"水印木刻版画"}
+                //    ],
+                //    [
+                //        {id:1,text:"不锈钢"},
+                //        {id:2,text:"玻璃钢"},
+                //        {id:3,text:"铜"},
+                //        {id:4,text:"石材"},
+                //        {id:5,text:"木雕"},
+                //        {id:6,text:"水泥"},
+                //        {id:7,text:"陶瓷"},
+                //        {id:8,text:"泥塑"},
+                //        {id:9,text:"3D打印"},
+                //        {id:10,text:"雕塑综合材料"},
+                //        {id:11,text:"石膏"}
+                //    ]
+                //]
                 tag.style_tag=resp.data.style_tag;
                 tag.theme_tag=resp.data.theme_tag;
                 tag.work_shapes=resp.data.work_shapes;
-                tag.work_types=resp.data.work_types;
+                tag.work_types=resp.data.work_categorys.slice(0,7);
                 tag.channel_info=resp.data.channel_info;
                 tag.print_types=resp.data.print_types;
                 tag.color_tag = color_tag;
-                tag.kind_tag = kind_tag;
-                tag.work_types_shoot = work_types_shoot;
-                tag.work_material = work_material;
+                tag.kind_tag = resp.data.work_kind;
+                tag.work_types_shoot = resp.data.work_categorys.slice(7,9);
+                tag.work_material = resp.data.work_materials;
                 localStorage.setItem("tag",JSON.stringify(tag));
                 $scope.tags = tag;
             }else{
@@ -128,7 +127,7 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
             var tag=JSON.parse(localStorage.getItem("tag"));
             obj.forEach(function(list){
                 if(list.kind == 1 && (list.category == 1 || list.category ==2 || list.category ==3 || list.category ==4)){
-                    list.material=tag.work_material[list.category-1][list.material-1].text;
+                    list.material=tag.work_material[list.material-1].text;
                 }else{
                     list.material='未知';
                 }

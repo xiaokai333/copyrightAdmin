@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" placeholder="输入作者名字检索" ng-model="artistName" ng-change="searchName(artistName)" required>
                 <select ng-show="isSearch" class="form-control col-md-12" ng-model="artwork.artist" ng-options="o.id as o.conbian_name
  for o in artistList" ng-click="updateName($event)" size="5">
-                    <option value="">请选择</option>
+                    <option value="" disabled>请选择</option>
                 </select>
             </div>
         </div>
@@ -86,7 +86,9 @@
                         <div class="col-md-10" ng-if="artwork.is_variable==0">
                             <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.width" ng-required="artwork.is_variable==0">宽(cm)
                             <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.height" ng-required="artwork.is_variable==0">高(cm)
-                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.length" ng-required="artwork.is_variable==0">长(cm)
+                            <label ng-show="artwork.category == 4 && artwork.is_variable==0">
+                                <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.length"  ng-required="artwork.category == 4 && artwork.is_variable==0">长(cm)
+                            </label>
                         </div>
                     </div>
                     <div class="radio col-md-12">
@@ -103,7 +105,7 @@
                 <span class="input-group-addon" id="color">画作色系</span>
                 <div class="col-md-10">
                     <label class="checkbox-inline" ng-repeat="color in color_tag">
-                        <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><button type="button" class="lq-colorBtn" style="background: {{color.text}}"></button>
+                        <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><div class="lq-colorBtn" style="background: {{color.text}}"></div>
                     </label>
                 </div>
             </div>
@@ -187,7 +189,7 @@
                 <textarea style="width: 100%;height: 120px;" class="margin-bottom" ng-model="artwork.exhibit_log"></textarea>
             </div>
         </div>
-        <button class="btn btn-info col-md-offset-3" type="submit" ng-disabled="save">保存</button>
+        <button class="btn btn-info col-md-offset-3" type="submit" ng-disabled="save">{{saveTit}}</button>
     </form>
 </div>
 

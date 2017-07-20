@@ -26,5 +26,6 @@ body{padding: 30px 20px;}
 .lq-colorBtn{
     width:20px;
     height:20px;
+    border:1px solid #5d5d5d;
 }
 

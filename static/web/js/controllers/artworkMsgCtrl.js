@@ -8,10 +8,11 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
         //初始化
         var artworkId = $stateParams['artworkId'];
         $scope.save = false;
+        $scope.saveTit = '保存并下一步';
         $scope.artworkId=artworkId;
         var keys = ['name', 'artist', 'year','kind','category','material','shape','is_variable',
-            'width', 'height', 'length', 'color', 'tag','sale_state',
-            'sale_direc', 'comm_precent', 'store_state', 'store', 'summary','exhibit_log'
+            'width', 'height', 'length', 'color', 'tag','sale_state','sale_direc',
+            'sale_price','comm_precent', 'store_state', 'store', 'summary','exhibit_log'
         ];
         var sendData=new FormData();
         $scope.artwork={};
@@ -22,7 +23,12 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
         $scope.color_tag=tag.color_tag;
         $scope.style_tag=tag.style_tag;
         $scope.theme_tag=tag.theme_tag;
-        $scope.work_material=tag.work_material;
+        $scope.work_material= [
+            tag.work_material.slice(0,8),
+            tag.work_material.slice(8,12),
+            tag.work_material.slice(12,19),
+            tag.work_material.slice(19,30)
+        ];
         $scope.work_shapes=tag.work_shapes;
         $scope.work_types=tag.work_types;
         $scope.work_types_shoot=tag.work_types_shoot;
@@ -151,6 +157,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
         //获取单个艺术品信息
         if(!(artworkId === 'NaN')){
             $scope.title="编辑";
+            $scope.saveTit = '保存';
             getMsg.do("work/detail/"+artworkId).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.artwork=resp.data.data;
@@ -215,8 +222,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                         transformRequest: angular.identity
                     }).then(function(resp){
                         if(resp.data.code === 0){
-                            //$location.path("/tabs/artwork/accredit/"+resp.data.work_id);
-                            $location.path("/tabs/artwork/list");
+                            $location.path("/tabs/artwork/accredit/"+resp.data.work_id);
                         }else{
                             showModal("alert",resp.data.message,$scope);
                         }

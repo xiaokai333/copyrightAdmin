@@ -41,7 +41,7 @@
             <span class="input-group-addon" id="color">画作色系</span>
             <div class="col-md-12">
                 <label class="checkbox-inline" ng-repeat="color in tags.color_tag">
-                    <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><button type="button" class="lq-colorBtn" style="background: {{color.text}}"></button>
+                    <input type="checkbox" name="color" ng-checked="isSelected('colorSelected',color.id)" ng-click="updateSelection('colorSelected',$event,color.id)"><div class="lq-colorBtn" style="background: {{color.text}}"></div>
                 </label>
             </div>
         </div>

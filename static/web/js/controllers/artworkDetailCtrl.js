@@ -26,7 +26,7 @@ index.controller('artworkDetailCtrl',['$scope','$stateParams','getMsg','userInfo
 
                     //材质
                     if($scope.artwork.kind == 1 && ($scope.artwork.category == 1 || $scope.artwork.category ==2 || $scope.artwork.category ==3 || $scope.artwork.category ==4)){
-                        $scope.artwork.material=tag.work_material[$scope.artwork.category-1][$scope.artwork.material-1].text;
+                        $scope.artwork.material=tag.work_material[$scope.artwork.material-1].text;
                     }else{
                         $scope.artwork.material = "未知";
                     }
