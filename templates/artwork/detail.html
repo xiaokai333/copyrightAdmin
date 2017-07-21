@@ -6,7 +6,7 @@
     <form action="">
         <div class="row margin-bottom">
             <div class="col-md-3">
-                <img style="width: 600px;height: 600px;" ng-src="{{artwork.cover}}" alt="艺术品">
+                <img style="max-width: 600px;max-height: 600px;" ng-src="{{artwork.cover}}" alt="艺术品">
             </div>
         </div>
         <div class="row margin-bottom">
@@ -81,9 +81,10 @@
                 <span>不固定</span>
             </div>
             <div class="col-md-5" ng-if="artwork.is_variable==0">
-                <span>{{artwork.width}}</span>宽(cm)
+                <span>{{artwork.length}}</span>长(cm)
                 <span>{{artwork.height}}</span>高(cm)
-                <span ng-show="artwork.category == '雕塑' ">{{artwork.length}}长(cm)</span>
+                <span ng-show="artwork.category == '雕塑' ">{{artwork.width}}宽(cm)</span>
+
             </div>
         </div>
         <div class="row margin-bottom">
@@ -91,6 +92,7 @@
                 <span>画作色系</span>
             </div>
             <div class="col-md-5">
+                <span  class="margin-left" ng-show="artwork.color == '' ">暂无</span>
                 <div class="lq-colorBtn" style="background: {{color.text}};margin-left: 10px;float:left;" ng-repeat="color in work_color_tag" ng-show="colorFlag[{{color.id}}]"></div>
             </div>
         </div>
@@ -98,26 +100,30 @@
             <h4 class="margin-bottom">标签</h4>
             <div class="col-md-12 margin-bottom">
                 <span>主题标签</span>
+                <span class="margin-left" ng-show="artwork.theme_tag == '' ">暂无</span>
                 <span class="margin-left" ng-repeat="theme in work_theme_tag" ng-show="themeFlag[{{theme.id}}]">{{theme.name}}</span>
             </div>
             <div class="col-md-12">
                 <span>风格标签</span>
+                <span class="margin-left" ng-show="artwork.style_tag == '' ">暂无</span>
                 <span class="margin-left" ng-repeat="style in work_style_tag" ng-show="styleFlag[{{style.id}}]">{{style.name}}</span>
             </div>
         </div>
         <div class="row margin-bottom">
             <h4 class="margin-bottom">原作销售状态</h4>
             <div class="col-md-12">
-                <span>{{artwork.sale_state}}</span>
+                <span class="margin-left" ng-show="artwork.sale_state == 0 ">暂无</span>
+                <span ng-show="artwork.sale_state != 0 ">{{artwork.sale_state}}</span>
                 <span class="margin-left" ng-if="artwork.sale_state=='待售'">{{artwork.sale_direc}}</span>
-                <span class="margin-left" ng-if="artwork.sale_direc=='艺术云朵' && artwork.sale_state=='待售'">价格:{{artwork.sale_price}}</span>元&nbsp;&nbsp;&nbsp;
+                <span class="margin-left" ng-if="artwork.sale_direc=='艺术云朵' && artwork.sale_state=='待售'">价格:{{artwork.sale_price}}元&nbsp;&nbsp;&nbsp;</span>
                 <span class="margin-left" ng-if="artwork.sale_direc=='艺术云朵' && artwork.sale_state=='待售'">佣金比例:{{artwork.comm_precent}}%</span>
             </div>
         </div>
         <div class="row margin-bottom">
             <h4 class="margin-bottom">原作收藏状态</h4>
             <div class="col-md-10">
-                <span>{{artwork.store_state}}</span>
+                <span class="margin-left" ng-show="artwork.store_state == 0 ">暂无</span>
+                <span ng-show="artwork.store_state != 0 ">{{artwork.store_state}}</span>
                 <span class="margin-left" ng-if="artwork.store_state == '其他收藏'">收藏地:{{artwork.store}}</span>
             </div>
         </div>
@@ -125,11 +131,11 @@
             <div class="col-md-10">
                 <h4 class="margin-bottom h3">艺术简介</h4>
                 <p>艺术内涵:</p>
-                <span class="margin-left" ng-show="artwork.summary =='' ">无</span>
-                <textarea class="margin-bottom" style="width: 100%;height: 120px;background: #e3e3e3;" ng-model="artwork.summary" readonly ng-show="artwork.summary !='' "></textarea>
+                <span class="margin-left" ng-show="artwork.summary ==null || artwork.summary ==''">无</span>
+                <textarea class="margin-bottom" style="width: 100%;height: 120px;background: #e3e3e3;" ng-model="artwork.summary" readonly ng-show="artwork.summary !=null && artwork.summary !='' "></textarea>
                 <p>展览记录:</p>
-                <span class="margin-left" ng-show="artwork.exhibit_log =='' ">无</span>
-                <textarea class="margin-bottom" style="width: 100%;height: 120px;background: #e3e3e3;" ng-model="artwork.exhibit_log" readonly ng-show="artwork.exhibit_log !='' "></textarea>
+                <span class="margin-left" ng-show="artwork.exhibit_log ==null || artwork.exhibit_log =='' ">无</span>
+                <textarea class="margin-bottom" style="width: 100%;height: 120px;background: #e3e3e3;" ng-model="artwork.exhibit_log" readonly ng-show="artwork.exhibit_log !=null && artwork.exhibit_log !='' "></textarea>
             </div>
         </div>
         <button class="btn btn-info col-md-offset-3 margin-bottom" type="button" ui-sref="tabs.artwork/artwork({artworkId:artwork.id})" ng-disabled="{{userInfo.data}} == 3">修改作品信息</button>
@@ -281,7 +287,7 @@
         <div class="row margin-bottom">
             <span class="col-md-5 margin-left">{{yearDate}}</span>
         </div>
-        <button class="btn btn-info col-md-offset-3" type="button" ng-disabled="{{userInfo.data}} == 3" ui-sref="tabs.artistsFiles/copyright({artistID:authorize.id})" >修改授权信息</button>
+        <button class="btn btn-info col-md-offset-3" type="button" ng-disabled="{{userInfo.data}} == 3" ui-sref="tabs.artwork/accredit({artworkId:artwork.id})">修改授权信息</button>
     </div>
 </div>
 

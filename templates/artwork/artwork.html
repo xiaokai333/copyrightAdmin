@@ -84,10 +84,10 @@
                             <input type="radio" name="size" ng-value="0" ng-model="artwork.is_variable" required>尺寸固定
                         </label>
                         <div class="col-md-10" ng-if="artwork.is_variable==0">
-                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.width" ng-required="artwork.is_variable==0">宽(cm)
+                            <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.length" ng-required="artwork.is_variable==0">长(cm)
                             <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.height" ng-required="artwork.is_variable==0">高(cm)
-                            <label ng-show="artwork.category == 4 && artwork.is_variable==0">
-                                <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.length"  ng-required="artwork.category == 4 && artwork.is_variable==0">长(cm)
+                            <label ng-if="artwork.category == 4 && artwork.is_variable==0">
+                                <input type="number" min="1" step="0.0001" style="width: 60px;" ng-model="artwork.width"  ng-required="artwork.category == 4 && artwork.is_variable==0">宽(cm)
                             </label>
                         </div>
                     </div>

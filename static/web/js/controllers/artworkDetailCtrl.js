@@ -40,7 +40,7 @@ index.controller('artworkDetailCtrl',['$scope','$stateParams','getMsg','userInfo
                     case(2):
                         $scope.artwork.kind = '摄影';
                         //作品类别
-                        $scope.artwork.category = tag.work_types_shoot[$scope.artwork.category-1].text;
+                        $scope.artwork.category = tag.work_types_shoot[$scope.artwork.category-8].text;
                         break;
                 }
                 //画作形状

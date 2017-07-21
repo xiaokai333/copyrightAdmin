@@ -124,10 +124,9 @@ index.controller('artworkListCtrl', ['$scope','getMsg','postJson','IPprefix','$h
         }
 
         var material=function(obj){
-            var tag=JSON.parse(localStorage.getItem("tag"));
             obj.forEach(function(list){
                 if(list.kind == 1 && (list.category == 1 || list.category ==2 || list.category ==3 || list.category ==4)){
-                    list.material=tag.work_material[list.material-1].text;
+                    list.material=$scope.tags.work_material[list.material-1].text;
                 }else{
                     list.material='未知';
                 }
