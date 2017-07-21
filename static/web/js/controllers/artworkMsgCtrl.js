@@ -123,9 +123,17 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                 showModal('alert',title,$scope);
                 $scope.checkd=false;
             }
+            //类型
+            if($scope.artwork.kind == 1 || $scope.artwork.kind == 2){
+                if(typeof ($scope.artwork.category) == 'undefined' || $scope.artwork.category == 0 || $scope.artwork.category == null ){
+                    var title = "请检查作品信息是否填写完整";
+                    showModal('alert',title,$scope);
+                    $scope.checkd=false;
+                }
+            }
             //材质
             if($scope.artwork.kind == 1 && ($scope.artwork.category == 1 || $scope.artwork.category ==2 || $scope.artwork.category ==3 || $scope.artwork.category == 4)){
-                if(typeof ($scope.artwork.material) == 'undefined' || $scope.artwork.material == null){
+                if(typeof ($scope.artwork.material) == 'undefined' || $scope.artwork.material == null  || $scope.artwork.material == 0){
                     var title = "请检查作品信息是否填写完整";
                     showModal('alert',title,$scope);
                     $scope.checkd=false;
@@ -161,6 +169,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             getMsg.do("work/detail/"+artworkId).then(function(resp){
                 if(resp.data.code === 0){
                     $scope.artwork=resp.data.data;
+                    console.log($scope.artwork)
                     $scope.artistName=$scope.artwork.artist_name;
                     //标签数据由字符串转换为数组
                     resp.data.data.color.split(",").forEach(function(color){
