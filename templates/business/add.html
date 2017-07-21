@@ -9,7 +9,7 @@
             <span style="color: red;" class="col-md-1 text-right">*</span>
             <div class="input-group col-md-7">
                 <span class="input-group-addon" id="approveNum">输入审批编号</span>
-                <input type="text" class="form-control" ng-model="businessId" required placeholder="务必输入完整的审批编号">
+                <input type="text" class="form-control" ng-model="businessId" required placeholder="务必输入完整的审批编号" ng-change="updataOk()">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="find(businessId)" ng-disabled="affirm">确认</button>
                   </span>

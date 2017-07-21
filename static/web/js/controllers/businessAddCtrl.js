@@ -8,6 +8,7 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
         $scope.save = false;
         $scope.business={};
         $scope.affirm=false;
+        var tag = JSON.parse(localStorage.getItem("tag"));
         //查找编号对应信息
         $scope.find=function(id){
             $http(
@@ -16,37 +17,17 @@ index.controller('businessAddCtrl', ['$scope','getMsg','postJson','$http','IPpre
                 if(resp.data.code === 0){
                     $scope.affirm=true;
                     $scope.artwork=resp.data;
-                    switch ($scope.artwork.channel_info){
-                        case(1):
-                            $scope.artwork.channel_info = '租租艺术';
-                            break;
-                        case(2):
-                            $scope.artwork.channel_info = '设计师平台';
-                            break;
-                        case(3):
-                            $scope.artwork.channel_info = 'wx';
-                            break;
-                        case(4):
-                            $scope.artwork.channel_info = '淘宝';
-                            break;
-                    }
-                    switch ($scope.artwork.types){
-                        case(1):
-                            $scope.artwork.types = '复制版画';
-                            break;
-                        case(2):
-                            $scope.artwork.types = '签名版';
-                            break;
-                        case(3):
-                            $scope.artwork.types = "签名限量版";
-                            break;
-                    }
+                    $scope.artwork.channel_info = tag.channel_info[$scope.artwork.channel_info-1].text;
+                    $scope.artwork.types = tag.print_types[$scope.artwork.types-1].text;
                 }else{
                     showModal("alert",resp.data.message,$scope);
                 }
             })
         }
 
+        $scope.updataOk=function(){
+            $scope.affirm=false;
+        }
         //生成业务数据按钮
         $scope.create=function(){
             if($scope.affirm){

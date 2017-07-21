@@ -95,6 +95,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
 
         //判断输入信息
         var checkInfo=function(){
+            $scope.checkd = true;
             //尺寸
             if($scope.artwork.is_variable==1){
                 $scope.artwork.width=0;
@@ -116,15 +117,15 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             if($scope.artwork.store_state!==3){
                 $scope.artwork.store='';
             }
-            //分类,类型,形状
-            if(typeof ($scope.artwork.artist)=="undefined" || typeof ($scope.artwork.kind)=="undefined" || typeof ($scope.artwork.shape)=="undefined"){
+            //作者,分类,形状
+            if(typeof ($scope.artwork.artist) == 'undefined' || typeof ($scope.artwork.kind) == 'undefined' || typeof ($scope.artwork.shape) == 'undefined'){
                 var title = "请检查作品信息是否填写完整";
                 showModal('alert',title,$scope);
                 $scope.checkd=false;
             }
             //材质
             if($scope.artwork.kind == 1 && ($scope.artwork.category == 1 || $scope.artwork.category ==2 || $scope.artwork.category ==3 || $scope.artwork.category == 4)){
-                if(typeof ($scope.artwork.material)=="undefined" || $scope.artwork.material == null){
+                if(typeof ($scope.artwork.material) == 'undefined' || $scope.artwork.material == null){
                     var title = "请检查作品信息是否填写完整";
                     showModal('alert',title,$scope);
                     $scope.checkd=false;
@@ -136,7 +137,6 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
             $scope.artwork.theme_tag = $scope.themeSelected.join(",");
             $scope.artwork.style_tag = $scope.styleSelected.join(",");
             $scope.artwork.tag=$scope.artwork.theme_tag=="" ? $scope.artwork.style_tag : $scope.artwork.theme_tag + "," + $scope.artwork.style_tag;
-            $scope.checkd=true;
 
             //formdata对象添加值
             function modelToFormData(fd,model,keys){
@@ -201,7 +201,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                             $location.path("/tabs/artwork/list");
                         }else{
                             showModal("alert",resp.data.message,$scope);
-                            return;
+                            $scope.save = false;
                         }
                     })
                 }
@@ -225,6 +225,7 @@ index.controller('artworkMsgCtrl',['$scope','$stateParams','getMsg','$http','IPp
                             $location.path("/tabs/artwork/accredit/"+resp.data.work_id);
                         }else{
                             showModal("alert",resp.data.message,$scope);
+                            $scope.save = false;
                         }
                     })
                 }
